@@ -294,6 +294,7 @@
       document.getElementById('newSpeakerName').value = '';
       toggleAddButton();
       renderSpeakerList();
+  document.getElementById('startBtn').disabled = !document.getElementById('speakerName').value.trim();
     }
 
     function deleteSpeaker() {
