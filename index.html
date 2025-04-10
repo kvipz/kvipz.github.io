@@ -2,331 +2,68 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Toastmasters Timer App</title>
-  <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      padding: 20px;
-      max-width: 1200px;
-      margin: auto;
-      background-color: #f4f4f4;
-      transition: background-color 0.5s ease;
-      display: flex;
-      gap: 30px;
-    }
-    .main {
-      flex: 2;
-      padding-right: 20px;
-      border-right: 2px solid #ccc;
-    }
-    .sidebar {
-      flex: 1;
-      font-size: 14px;
-      padding-left: 20px;
-    }
-    h1, h2 {
-      text-align: center;
-    }
-    select, input, button, textarea {
-      width: 100%;
-      padding: 12px;
-      margin-top: 10px;
-      font-size: 16px;
-      box-sizing: border-box;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-    }
-    button {
-      min-height: 44px;
-      cursor: pointer;
-      background-color: #007bff;
-      color: white;
-      border: none;
-    }
-    button:disabled {
-      background-color: #999;
-      cursor: not-allowed;
-    }
-    #currentSpeaker {
-      text-align: center;
-      font-size: 18px;
-      margin-top: 10px;
-      margin-bottom: 10px;
-    }
-    #timer {
-      font-size: 64px;
-      text-align: center;
-    }
-    .button-row {
-      display: flex;
-      justify-content: space-between;
-      gap: 10px;
-    }
-    textarea {
-      height: 150px;
-      resize: vertical;
-      overflow: auto;
-    }
-    .inline-button {
-      display: flex;
-      gap: 10px;
-    }
-    ul#speakerList {
-      list-style: none;
-      padding-left: 0;
-      max-height: 150px;
-      overflow-y: auto;
-    }
-    ul#speakerList li {
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-      gap: 8px;
-      font-size: 16px;
-      width: 100%;
-    }
-    ul#speakerList li span {
-      display: block;
-      font-size: 16px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-    .note {
-      font-style: italic;
-      font-size: 13px;
-      margin-top: 10px;
-      color: #555;
-    }
-    @media (max-width: 768px) {
-      body {
-        flex-direction: column;
-        gap: 0;
-      }
-      .main, .sidebar {
-        border-right: none;
-        padding-right: 0;
-        padding-left: 0;
-      }
-      .button-row {
-        flex-direction: column;
-      }
-      #timer {
-        font-size: 48px;
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="main">
-    <h1>Toastmasters Timer App</h1>
-    <fieldset style="border: 1px solid #ccc; padding: 10px; margin-bottom: 20px;">
-      <legend><strong>Speaker Information</strong></legend>
-      <div class="note">You can either manually enter a speaker name or pick the top name from the speaker list (if available).</div>
-      <select id="speechType">
-        <option value="4,5,6">Ice Breaker (4-6 Min)</option>
-        <option value="5,6,7">Other Speech (5-7 Min)</option>
-        <option value="1,1.5,2">Table Topic (1-2 Min)</option>
-        <option value="2,2.5,3">Evaluator (2-3 Min)</option>
-      </select>
-      <div>
-        <input type="text" id="speakerName" placeholder="Enter Speaker Name" />
-        <div style="text-align: center; margin: 10px 0; font-weight: bold;">OR</div>
-        <button onclick="pickFromList()" id="pickBtn" disabled style="padding: 8px 10px; font-size: 14px;">Insert Name from the List (if available)</button>
+  <h1>Toastmasters Timer App</h1>
+  <div class="container">
+    <div class="main-content">
+      <div class="note">Enter speaker name and speech type manually or insert from the list</div>
+      <div class="controls">
+        <label for="speechType">Speech Type:</label>
+        <select id="speechType">
+          <option value="4,5,6">Ice Breaker (4-6 min)</option>
+          <option value="5,6,7">Other Speech (5-7 min)</option>
+          <option value="1,1.5,2">Table Topic (1-2 min)</option>
+          <option value="2,2.5,3">Evaluator (2-3 min)</option>
+        </select>
+
+        <label for="speakerName">Speaker Name:</label>
+        <div style="display: flex; flex-direction: column; gap: 6px;">
+          <input type="text" id="speakerName" placeholder="Enter speaker name" />
+          <div style="text-align: center; font-weight: bold;">OR</div>
+          <button onclick="pickFromList()"  class="btn-standard" id="pickBtn" disabled>Insert Name from List</button>
+        </div>
+
+        <div id="timer">00:00</div>
+
+        <div class="button-group">
+          <button id="startBtn" class="btn-start" onclick="toggleStartPause()">Start</button>
+          <button id="stopBtn" class="btn-stop" onclick="stopTimer()" disabled>Stop</button>
+        </div>
       </div>
-    </fieldset>
-    <div id="timer">00:00</div>
-    <div class="button-row">
-      <button type="button" onclick="startTimer()" id="startBtn">Start</button>
-      <button onclick="stopTimer()" id="stopBtn" disabled>Stop</button>
+
+      <div class="log-section">
+        <label for="logBox">Log:</label>
+        <textarea id="logBox" rows="6"></textarea>
+        <div style="display: flex; gap: 10px; margin-top: 10px;">
+          <button onclick="exportLogs()" class="btn-export">⤓ Export Logs</button>
+          <button onclick="resetLogs()" class="btn-reset">♻️ Reset Logs</button>
+        </div>
+      </div>
     </div>
-    <textarea id="logBox"></textarea>
-    <div class="button-row">
-      <button onclick="exportLogs()">Export Logs</button>
-      <button onclick="resetLogs()">Reset Logs</button>
+
+    <div class="advanced">
+      <h2>Advanced Features</h2>
+      <div class="note">Use this section to add speakers in advance.</div>
+      <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+        <input type="text" id="newSpeakerName" placeholder="Speaker name" style="flex: 1; min-width: 200px;">
+        <select id="newSpeechType" style="flex: 1; min-width: 200px;">
+          <option value="4,5,6">Ice Breaker (4-6 min)</option>
+          <option value="5,6,7">Other Speech (5-7 min)</option>
+          <option value="1,1.5,2">Table Topic (1-2 min)</option>
+          <option value="2,2.5,3">Evaluator (2-3 min)</option>
+        </select>
+      </div>
+      <div style="display: flex; gap: 10px; margin-top: 10px;">
+        <button onclick="addSpeaker()"  class="btn-standard" id="addSpeakerBtn" disabled>Add Speaker</button>
+        <button onclick="deleteSpeaker()"  class="btn-standard" id="deleteSpeakerBtn" disabled>Delete Last</button>
+      </div>
+      <ul id="speakerList"></ul>
     </div>
   </div>
-
-  <div class="sidebar">
-    <h2>Advanced Features</h2>
-    <div class="note">Use this section to add speakers in advance.</div>
-    <input type="text" id="newSpeakerName" placeholder="Speaker name" oninput="toggleAddButton()" />
-    <select id="newSpeechType">
-      <option value="Ice Breaker (4-6 Min)|4,5,6">Ice Breaker (4-6 Min)</option>
-      <option value="Other Speech (5-7 Min)|5,6,7">Other Speech (5-7 Min)</option>
-      <option value="Table Topic (1-2 Min)|1,1.5,2">Table Topic (1-2 Min)</option>
-      <option value="Evaluator (2-3 Min)|2,2.5,3">Evaluator (2-3 Min)</option>
-    </select>
-    <div class="button-row">
-      <button onclick="addSpeaker()" id="addSpeakerBtn" disabled>Add Speaker</button>
-      <button onclick="deleteSpeaker()" id="deleteSpeakerBtn" disabled>Delete Speaker</button>
-    </div>
-    <ul id="speakerList"></ul>
-  </div>
-
-  <script>
-    window.addEventListener('DOMContentLoaded', () => {
-      const nameInput = document.getElementById('speakerName');
-      const startBtn = document.getElementById('startBtn');
-      nameInput.addEventListener('input', () => {
-        startBtn.disabled = !nameInput.value.trim();
-      });
-      startBtn.disabled = !nameInput.value.trim();
-    });
-    let timer;
-    let startTime;
-    let log = [];
-    let minTime = 0, midTime = 0, maxTime = 0;
-    let minShown = false, midShown = false, maxReached = false;
-    let speakerQueue = [];
-
-    function startTimer() {
-      document.getElementById('pickBtn').disabled = true;
-      document.getElementById('speakerName').disabled = true;
-      document.getElementById('speechType').disabled = true;
-      const nameInput = document.getElementById('speakerName');
-      
-      
-      
-
-      if (!nameInput.value.trim()) {
-        alert('Please enter a speaker name.');
-        return;
-      }
-      const speechValue = document.getElementById('speechType').value.split(',');
-      minTime = parseFloat(speechValue[0]) * 60 * 1000;
-      midTime = parseFloat(speechValue[1]) * 60 * 1000;
-      maxTime = parseFloat(speechValue[2]) * 60 * 1000;
-      minShown = midShown = maxReached = false;
-      startTime = new Date();
-      timer = setInterval(updateTimer, 1000);
-      document.getElementById('startBtn').disabled = true;
-      document.getElementById('stopBtn').disabled = false;
-      document.body.style.backgroundColor = '#f4f4f4';
-          }
-
-    function stopTimer() {
-      clearInterval(timer);
-      const elapsed = new Date() - startTime;
-      const minutes = Math.floor(elapsed / 60000);
-      const seconds = Math.floor((elapsed % 60000) / 1000);
-      const timeString = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-      const speaker = document.getElementById('speakerName').value;
-      const fullType = document.getElementById('speechType').selectedOptions[0].text;
-      const type = fullType.replace(/\s*\(.*\)/, '').trim();
-      const entry = `${speaker} (${type}): ${timeString}`;
-
-      const currentLog = document.getElementById('logBox').value.trim();
-      const newLog = currentLog ? `${currentLog}\n${entry}` : entry;
-      document.getElementById('logBox').value = newLog;
-
-      log = newLog.split('\n');
-
-      document.getElementById('timer').textContent = '00:00';
-      document.getElementById('startBtn').disabled = false;
-      document.getElementById('stopBtn').disabled = true;
-      document.getElementById('speakerName').disabled = false;
-      document.getElementById('speechType').disabled = false;
-      document.getElementById('pickBtn').disabled = speakerQueue.length === 0;
-      document.getElementById('speakerName').value = '';
-            document.body.style.backgroundColor = '#f4f4f4';
-    }
-
-    function updateTimer() {
-      const elapsed = new Date() - startTime;
-      const minutes = Math.floor(elapsed / 60000);
-      const seconds = Math.floor((elapsed % 60000) / 1000);
-      document.getElementById('timer').textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-
-      if (!minShown && elapsed >= minTime && elapsed < midTime) {
-        minShown = true;
-        flashBackground('#66ff66');
-      } else if (!midShown && elapsed >= midTime && elapsed < maxTime) {
-        midShown = true;
-        flashBackground('#ffff66');
-      } else if (!maxReached && elapsed >= maxTime) {
-        maxReached = true;
-        document.body.style.backgroundColor = '#ff4d4d';
-      }
-    }
-
-    function flashBackground(color) {
-      document.body.style.backgroundColor = color;
-      setTimeout(() => {
-        if (!maxReached) {
-          document.body.style.backgroundColor = '#f4f4f4';
-        }
-      }, 5000);
-    }
-
-    function exportLogs() {
-      const content = document.getElementById('logBox').value;
-      const blob = new Blob([content], { type: 'text/plain' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'speech_log.txt';
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-    }
-
-    function resetLogs() {
-      log = [];
-      document.getElementById('logBox').value = '';
-      document.getElementById('speakerName').value = '';
-    }
-
-    function toggleAddButton() {
-      const name = document.getElementById('newSpeakerName').value.trim();
-      document.getElementById('addSpeakerBtn').disabled = !name;
-    }
-
-    function addSpeaker() {
-      const name = document.getElementById('newSpeakerName').value.trim();
-      const typeOption = document.getElementById('newSpeechType').value.split('|');
-      const label = typeOption[0];
-      const value = typeOption[1];
-      if (!name) return;
-      speakerQueue.push({ name, label, value });
-      document.getElementById('newSpeakerName').value = '';
-      toggleAddButton();
-      renderSpeakerList();
-  document.getElementById('startBtn').disabled = !document.getElementById('speakerName').value.trim();
-    }
-
-    function deleteSpeaker() {
-      if (speakerQueue.length > 0) {
-        speakerQueue.pop();
-        renderSpeakerList();
-      }
-    }
-
-    function renderSpeakerList() {
-      const list = document.getElementById('speakerList');
-      const pickBtn = document.getElementById('pickBtn');
-      const deleteBtn = document.getElementById('deleteSpeakerBtn');
-      list.innerHTML = '';
-      speakerQueue.forEach((s) => {
-        const li = document.createElement('li');
-        const label = document.createElement('span');
-        label.textContent = `${s.name} (${s.label})`;
-        li.appendChild(label);
-        list.appendChild(li);
-      });
-      pickBtn.disabled = speakerQueue.length === 0;
-      deleteBtn.disabled = speakerQueue.length === 0;
-    }
-
-    function pickFromList() {
-      if (speakerQueue.length === 0) return;
-      const speaker = speakerQueue.shift();
-      document.getElementById('speakerName').value = speaker.name;
-      document.getElementById('speechType').value = speaker.value;
-      renderSpeakerList();
-    }
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
