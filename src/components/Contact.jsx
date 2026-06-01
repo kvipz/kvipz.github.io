@@ -35,14 +35,14 @@ const contactLinks = [
 
 export default function Contact() {
   return (
-    <section id="contact" className="py-24 px-4 bg-navy-800/20">
+    <section id="contact" className="py-24 px-4 theme-section-alt">
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-14">
           <p className="section-subheading">Get In Touch</p>
           <h2 className="section-heading">Contact Me</h2>
           <div className="w-12 h-1 bg-gradient-to-r from-sky-400 to-indigo-400 rounded-full mx-auto mt-4" />
           <p className="text-slate-400 mt-6 max-w-xl mx-auto">
-            I'm open to senior engineering roles, consulting engagements, and collaboration on interesting platform challenges. Let's connect!
+            Always happy to connect, collaborate on interesting platform challenges, or just talk shop. Let's connect!
           </p>
         </div>
 
@@ -78,7 +78,7 @@ export default function Contact() {
             <div className="text-4xl mb-4">👋</div>
             <h3 className="text-white font-bold text-xl mb-3">Let's Work Together</h3>
             <p className="text-slate-400 text-sm leading-relaxed mb-6">
-              Whether it's a full-time role, a contract engagement, or just a chat about cloud platforms and engineering culture — my inbox is always open.
+              Whether it's a collaboration, a chat about cloud platforms, engineering culture, or just connecting — my inbox is always open.
             </p>
             <a
               href={`mailto:${personal.email}`}
