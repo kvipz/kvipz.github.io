@@ -4,7 +4,7 @@ export const personal = {
   name: 'Vipin Kumar',
   title: 'Principal Platform Engineer',
   subtitle: 'Multi-Cloud Platform Specialist',
-  roles: ['Principal Platform Engineer', 'Cloud Architect', 'Reliability Specialist', 'Engineering Leader'],
+  roles: ['Principal Platform Engineer', 'Cloud Architect', 'SRE', 'Engineering Leader'],
   get summary() {
     const exp = poeticExperience(CAREER_START);
     return `Platform engineering professional with ${exp} of experience across AWS, Azure and Kubernetes ecosystem. Consistent focus on platform-as-a-product thinking, developer experience and operational excellence. Advocate for modern engineering practices and a collaborative approach to platform enablement.`;
