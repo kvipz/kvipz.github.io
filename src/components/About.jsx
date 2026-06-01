@@ -10,7 +10,7 @@ const pillars = [
   { icon: '🧩', label: 'Inner Source' },
 ];
 
-const personal_facts = [
+const getPersonalFacts = (daughterAge) => [
   {
     icon: '📍',
     title: 'Delhi Roots, Gurugram Based',
@@ -54,9 +54,10 @@ const personal_facts = [
 ];
 
 export default function About() {
-  const expYears    = yearsFrom(CAREER_START);
-  const expPoetic   = poeticExperience(CAREER_START);
-  const daughterAge = ageString(DAUGHTER_BORN);
+  const expYears      = yearsFrom(CAREER_START);
+  const expPoetic     = poeticExperience(CAREER_START);
+  const daughterAge   = ageString(DAUGHTER_BORN);
+  const personal_facts = getPersonalFacts(daughterAge);
 
   return (
     <section id="about" className="py-24 px-4">
