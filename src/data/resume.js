@@ -1,9 +1,14 @@
+import { poeticExperience, CAREER_START } from '../utils/dates';
+
 export const personal = {
   name: 'Vipin Kumar',
-  title: 'Principal Engineer',
+  title: 'Principal Platform Engineer',
   subtitle: 'Multi-Cloud Platform Specialist',
-  summary:
-    'Senior Platform Engineering professional with 15 years of experience across AWS, Azure and Kubernetes ecosystem. Consistent focus on platform-as-a-product thinking, developer experience and operational excellence. Advocate for modern engineering practices and a collaborative approach to platform enablement.',
+  roles: ['Principal Platform Engineer', 'Cloud Architect', 'Reliability Specialist', 'Engineering Leader'],
+  get summary() {
+    const exp = poeticExperience(CAREER_START);
+    return `Platform engineering professional with ${exp} of experience across AWS, Azure and Kubernetes ecosystem. Consistent focus on platform-as-a-product thinking, developer experience and operational excellence. Advocate for modern engineering practices and a collaborative approach to platform enablement.`;
+  },
   email: 'k.vipz88@gmail.com',
   phone: '+91-9891302743',
   linkedin: 'https://linkedin.com/in/linked-vip-in',
@@ -107,15 +112,25 @@ export const experience = [
     ],
   },
   {
-    role: 'Design Architect | Senior Engineer',
-    company: 'HCL Technologies & Ericsson Global India',
+    role: 'Design Architect',
+    company: 'HCL Technologies',
+    location: 'Noida',
+    period: '2019',
+    current: false,
+    highlights: [
+      'Designed fault-tolerant cloud architectures for public-facing applications across AWS and Azure',
+      'Built CI/CD pipelines using Jenkins and CloudFormation enabling continuous deployments',
+    ],
+  },
+  {
+    role: 'Senior Engineer',
+    company: 'Ericsson Global India',
     location: 'Noida',
     period: '2014 – 2019',
     current: false,
     highlights: [
-      'Designed fault-tolerant cloud architectures across AWS and Azure',
-      'Built CI/CD pipelines using Jenkins and CloudFormation',
       'Automated network KPI monitoring — 20% efficiency increase, 30% manual effort reduction',
+      'Designed and maintained large-scale telecom network infrastructure and monitoring systems',
     ],
   },
   {
@@ -175,14 +190,143 @@ export const skills = [
 ];
 
 export const certifications = [
-  { name: 'Certified Kubernetes Administrator (CKA)', issuer: 'CNCF', year: '2026', badge: 'K8s' },
-  { name: 'Certified Kubernetes Application Developer (CKAD)', issuer: 'CNCF', year: '2020', badge: 'K8s' },
-  { name: 'Microsoft Azure AI Fundamentals', issuer: 'Microsoft', year: '2025', badge: 'Azure' },
-  { name: 'AWS Advanced Networking Specialty', issuer: 'Amazon', year: '2023', badge: 'AWS' },
-  { name: 'HashiCorp Certified: Terraform Associate', issuer: 'HashiCorp', year: '2021', badge: 'TF' },
-  { name: 'Azure Solution Architect Expert', issuer: 'Microsoft', year: '2020', badge: 'Azure' },
-  { name: 'AWS Certified Solution Architect Associate', issuer: 'Amazon', year: '2017', badge: 'AWS' },
+  {
+    name: 'Certified Kubernetes Administrator',
+    abbr: 'CKA',
+    issuer: 'CNCF / Linux Foundation',
+    year: '2026',
+    logo: '/badges/cka.png',
+    color: 'sky',
+    credly: 'https://www.credly.com/badges/40ef033b-5986-4bc4-b918-6f31a5714bb2',
+  },
+  {
+    name: 'Certified Kubernetes Application Developer',
+    abbr: 'CKAD',
+    issuer: 'CNCF / Linux Foundation',
+    year: '2020',
+    logo: '/badges/ckad.png',
+    color: 'sky',
+    credly: 'https://www.credly.com/badges/d373898e-541f-4a7a-bc06-89dddf29e060',
+  },
+  {
+    name: 'Microsoft Azure AI Fundamentals',
+    abbr: 'AI-900',
+    issuer: 'Microsoft',
+    year: '2025',
+    logo: '/badges/azure-ai.png',
+    color: 'blue',
+    credly: 'https://learn.microsoft.com/api/credentials/share/en-us/VipinKumar-7205/DDFAD3C1146C74F4?sharingId=A0A9F0E1F495A220',
+  },
+  {
+    name: 'AWS Advanced Networking Specialty',
+    abbr: 'ANS-C01',
+    issuer: 'Amazon Web Services',
+    year: '2023',
+    logo: '/badges/aws-networking.png',
+    color: 'orange',
+    credly: 'https://www.credly.com/badges/223abb67-b9d9-4721-9cbd-aa1f930af2c6',
+  },
+  {
+    name: 'HashiCorp Certified: Terraform Associate',
+    abbr: 'TF-002',
+    issuer: 'HashiCorp',
+    year: '2021',
+    logo: '/badges/terraform.png',
+    color: 'purple',
+    credly: 'https://www.credly.com/badges/7f042b02-f213-470d-a90a-a73c3332b602',
+  },
+  {
+    name: 'Azure Solutions Architect Expert',
+    abbr: 'AZ-303/304',
+    issuer: 'Microsoft',
+    year: '2020',
+    logo: '/badges/azure-architect.svg',
+    color: 'blue',
+    credly: 'https://www.credly.com/badges/46f764b1-68b1-4357-885a-f27d81608df4',
+  },
+  {
+    name: 'AWS Certified Solutions Architect Associate',
+    abbr: 'SAA-C01',
+    issuer: 'Amazon Web Services',
+    year: '2017',
+    logo: '/badges/aws-sa.png',
+    color: 'orange',
+    credly: 'https://www.credly.com/badges/0331b211-aec9-45df-a734-2289a862921b',
+  },
 ];
+
+export const books = {
+  reading: [
+    {
+      title: "The Culture Map",
+      author: "Erin Meyer",
+      cover: "https://covers.openlibrary.org/b/id/10854287-L.jpg",
+      note: "Decoding how people think, lead, and get things done across cultures.",
+    },
+    {
+      title: "The 48 Laws of Power",
+      author: "Robert Greene",
+      cover: "https://covers.openlibrary.org/b/id/6424160-L.jpg",
+      note: "Timeless lessons on power, strategy, and human nature.",
+    },
+    {
+      title: "The Manager's Path",
+      author: "Camille Fournier",
+      cover: "https://covers.openlibrary.org/b/id/8667291-L.jpg",
+      note: "A guide for tech leaders navigating growth from engineer to executive.",
+    },
+    {
+      title: "The Staff Engineer's Path",
+      author: "Tanya Reilly",
+      cover: "/badges/staff-eng-path.webp",
+      note: "What it means to be a senior technical contributor without management.",
+    },
+    {
+      title: "An Elegant Puzzle",
+      author: "Will Larson",
+      cover: "/badges/elegant-puzzle.jpg",
+      note: "Systems of engineering management — how to build and scale engineering organisations.",
+    },
+  ],
+  completed: [
+    {
+      title: "Platform Engineering",
+      author: "Camille Fournier & Ian Nowland",
+      cover: "/badges/platform-engineering.webp",
+      note: "The what, why, and how of building Internal Developer Platforms.",
+    },
+    {
+      title: "The First 90 Days",
+      author: "Michael D. Watkins",
+      cover: "/badges/first-90-days.png",
+      note: "Strategies for getting up to speed faster in any new leadership role.",
+    },
+    {
+      title: "Accelerate",
+      author: "Nicole Forsgren, Jez Humble & Gene Kim",
+      cover: "https://covers.openlibrary.org/b/id/8509069-L.jpg",
+      note: "The science of lean software and DevOps — backed by four years of research.",
+    },
+    {
+      title: "Modern Software Engineering",
+      author: "David Farley",
+      cover: "https://covers.openlibrary.org/b/id/13627918-L.jpg",
+      note: "Engineering discipline applied to software — how to build better systems.",
+    },
+    {
+      title: "Production Kubernetes",
+      author: "Josh Rosso et al.",
+      cover: "https://covers.openlibrary.org/b/id/13504439-L.jpg",
+      note: "Running Kubernetes at scale in real-world production environments.",
+    },
+    {
+      title: "Team Topologies",
+      author: "Matthew Skelton & Manuel Pais",
+      cover: "https://covers.openlibrary.org/b/id/10354937-L.jpg",
+      note: "Organising teams for fast flow and effective platform delivery.",
+    },
+  ],
+};
 
 export const interests = [
   {

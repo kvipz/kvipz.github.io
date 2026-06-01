@@ -1,8 +1,8 @@
 import { Heart } from 'lucide-react';
 import { personal } from '../data/resume';
 
-const links = ['#about', '#experience', '#skills', '#certifications', '#interests', '#contact'];
-const labels = ['About', 'Experience', 'Skills', 'Certifications', 'Interests', 'Contact'];
+const links = ['#about', '#experience', '#skills', '#certifications', '#library', '#interests', '#contact'];
+const labels = ['About', 'Experience', 'Skills', 'Certifications', 'Library', 'Interests', 'Contact'];
 
 export default function Footer() {
   return (

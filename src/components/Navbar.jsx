@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Sun, Moon } from 'lucide-react';
+import { useTheme } from '../contexts/ThemeContext';
 
 const navLinks = [
   { label: 'About', href: '#about' },
   { label: 'Experience', href: '#experience' },
   { label: 'Skills', href: '#skills' },
   { label: 'Certifications', href: '#certifications' },
+  { label: 'Library', href: '#library' },
   { label: 'Interests', href: '#interests' },
   { label: 'Contact', href: '#contact' },
 ];
@@ -14,6 +16,7 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState('');
+  const { theme, toggle } = useTheme();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -60,22 +63,25 @@ export default function Navbar() {
                 {link.label}
               </a>
             ))}
-            <a
-              href="mailto:k.vipz88@gmail.com"
-              className="ml-4 px-4 py-2 rounded-lg text-sm font-semibold bg-sky-500/10 border border-sky-500/30 text-sky-400 hover:bg-sky-500/20 hover:border-sky-400 transition-all duration-200"
-            >
-              Hire Me
-            </a>
           </div>
 
-          {/* Mobile menu button */}
-          <button
-            className="md:hidden text-slate-400 hover:text-white transition-colors"
-            onClick={() => setOpen(!open)}
-            aria-label="Toggle menu"
-          >
-            {open ? <X size={22} /> : <Menu size={22} />}
-          </button>
+          {/* Theme toggle + mobile menu button */}
+          <div className="flex items-center gap-2">
+            <button
+              onClick={toggle}
+              className="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/50 transition-all duration-200"
+              aria-label="Toggle theme"
+            >
+              {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+            </button>
+            <button
+              className="md:hidden text-slate-400 hover:text-white transition-colors"
+              onClick={() => setOpen(!open)}
+              aria-label="Toggle menu"
+            >
+              {open ? <X size={22} /> : <Menu size={22} />}
+            </button>
+          </div>
         </div>
       </div>
 
@@ -93,12 +99,6 @@ export default function Navbar() {
                 {link.label}
               </a>
             ))}
-            <a
-              href="mailto:k.vipz88@gmail.com"
-              className="block mt-3 px-4 py-3 rounded-lg text-center font-semibold bg-sky-500/10 border border-sky-500/30 text-sky-400"
-            >
-              Hire Me
-            </a>
           </div>
         </div>
       )}
