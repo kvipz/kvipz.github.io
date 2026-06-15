@@ -1,5 +1,6 @@
 import { personal } from '../data/resume';
 import { yearsFrom, ageString, poeticExperience, CAREER_START, DAUGHTER_BORN } from '../utils/dates';
+import { ExternalLink } from 'lucide-react';
 
 const pillars = [
   { icon: '🏗️', label: 'Platform-as-a-Product' },
@@ -30,6 +31,8 @@ const getPersonalFacts = (daughterAge) => [
     icon: '🏆',
     title: 'Toastmaster & Ex VP-Education',
     text: 'Active Toastmaster, former VP-Education — driving club excellence by applying product thinking and pushing members to pursue their speaking goals relentlessly.',
+    link: 'https://toastthemost.github.io',
+    linkText: 'Club App',
   },
   {
     icon: '📚',
@@ -50,6 +53,11 @@ const getPersonalFacts = (daughterAge) => [
     icon: '✈️',
     title: 'Traveller at Heart',
     text: 'Covered most states across India. Only 4 countries so far internationally — but the list is growing and the wanderlust isn\'t going anywhere.',
+  },
+  {
+    icon: '🤖',
+    title: 'AI & Emerging Tech',
+    text: 'Actively exploring AI-powered tools and their real-world applications in platform engineering and operations.',
   },
 ];
 
@@ -167,7 +175,7 @@ export default function About() {
             <div className="flex-1 h-px bg-gradient-to-r from-slate-700 to-transparent hidden sm:block" />
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             {personal_facts.map((fact) => (
               <div
                 key={fact.title}
@@ -178,6 +186,17 @@ export default function About() {
                   {fact.title}
                 </h4>
                 <p className="text-slate-500 text-xs leading-relaxed">{fact.text}</p>
+                {fact.link && (
+                  <a
+                    href={fact.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 mt-auto text-sky-400 hover:text-sky-300 text-xs font-medium transition-colors"
+                  >
+                    {fact.linkText}
+                    <ExternalLink size={11} />
+                  </a>
+                )}
               </div>
             ))}
           </div>

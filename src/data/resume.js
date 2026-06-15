@@ -43,6 +43,37 @@ export const highlights = [
   },
 ];
 
+export const milestones = [
+  {
+    type: 'milestone',
+    year: '1988',
+    title: 'Born',
+    icon: '👶',
+    description: 'Born on 24 November 1988.',
+  },
+  {
+    type: 'milestone',
+    year: '2004',
+    title: 'Completed 10th Grade',
+    icon: '📘',
+    description: 'Finished secondary schooling (10th grade).',
+  },
+  {
+    type: 'milestone',
+    year: '2006',
+    title: 'Completed 12th Grade',
+    icon: '📗',
+    description: 'Finished senior secondary schooling (12th grade).',
+  },
+  {
+    type: 'milestone',
+    year: '2010',
+    title: 'B.E. Electronics & Communication Engineering',
+    icon: '🎓',
+    description: 'Graduated from Delhi College of Engineering, Delhi.',
+  },
+];
+
 export const experience = [
   {
     role: 'Principal Engineer – AzureOps',
@@ -144,6 +175,19 @@ export const experience = [
       'Delivered critical upgrades with zero service disruption',
     ],
   },
+];
+
+// Chronological combination of life milestones and work experience, oldest first.
+export const timeline = [
+  ...milestones,
+  ...experience
+    .slice()
+    .reverse()
+    .map((job) => ({
+      type: 'job',
+      year: (job.period.match(/\d{4}/) || [''])[0],
+      ...job,
+    })),
 ];
 
 export const skills = [
@@ -328,28 +372,35 @@ export const books = {
   ],
 };
 
-export const interests = [
+export const tools = [
   {
-    icon: '🎤',
-    title: 'Toastmasters – VP Education',
+    icon: 'Mic2',
+    title: 'Toastmasters Club App',
     description:
-      'Serving as Vice President Education at Fidelity International Toastmasters, driving member development through structured Pathways learning programs, speech coaching, and club excellence initiatives.',
+      'Meeting toolkit for Toastmasters clubs — manage the speaker lineup, evaluation forms, timer, ah-counter, and grammarian roles all in one place.',
     link: 'https://toastthemost.github.io',
-    linkText: 'Club App →',
   },
   {
-    icon: '🏔️',
-    title: 'Trekking & Adventure',
-    description: 'Love exploring the Himalayas and going on treks — a great way to disconnect, reset, and find clarity.',
+    icon: 'SlidersHorizontal',
+    title: 'Team Culture Map',
+    description:
+      'Interactive sliders for mapping how a team or org actually operates across 7 cultural dimensions — from secrecy to openness, top-down to bottom-up, fast to deliberate, and more.',
+    link: 'https://vip-in-the-cloud.dev/team-culture-map/',
+    reference: 'Framework from "The Staff Engineer\'s Path" by Tanya Reilly',
   },
   {
-    icon: '📚',
-    title: 'Reading & Learning',
-    description: 'Passionate about books on technology leadership, systems thinking, and personal growth.',
+    icon: 'Grid2x2',
+    title: 'Power-Interest Grid',
+    description:
+      'Stakeholder mapping tool — add stakeholders and drag them into the quadrant that fits their power and interest level to plan engagement strategy.',
+    link: 'https://vip-in-the-cloud.dev/power-interest-grid/',
+    reference: 'Framework from "Platform Engineering" by Camille Fournier & Ian Nowland',
   },
   {
-    icon: '🤖',
-    title: 'AI & Emerging Tech',
-    description: 'Actively exploring AI-powered tools and their real-world applications in platform engineering and operations.',
+    icon: 'CalendarRange',
+    title: 'Office Scheduler',
+    description:
+      'Plans monthly office attendance — tracks holidays, leave, and WFH days for two people and computes the in-office attendance balance for the month.',
+    link: 'https://vip-in-the-cloud.dev/office-scheduler/',
   },
 ];

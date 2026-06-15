@@ -4,8 +4,8 @@ import About from './components/About';
 import Experience from './components/Experience';
 import Skills from './components/Skills';
 import Certifications from './components/Certifications';
+import Tools from './components/Tools';
 import Library from './components/Library';
-import Interests from './components/Interests';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 
@@ -18,8 +18,8 @@ export default function App() {
       <Experience />
       <Skills />
       <Certifications />
+      <Tools />
       <Library />
-      <Interests />
       <Contact />
       <Footer />
     </div>
