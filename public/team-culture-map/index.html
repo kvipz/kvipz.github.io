@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Team Culture Map</title>
+<style>
+    * { box-sizing: border-box; }
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, sans-serif;
+        margin: 0;
+        padding: 24px 16px 64px;
+        background: #f8fafc;
+        color: #1e293b;
+    }
+    .wrap {
+        max-width: 760px;
+        margin: 0 auto;
+    }
+    h1 {
+        text-align: center;
+        margin-bottom: 4px;
+        font-size: 28px;
+    }
+    .subtitle {
+        text-align: center;
+        color: #64748b;
+        margin-bottom: 32px;
+        font-size: 14px;
+    }
+    .slider-block {
+        background: #fff;
+        border: 1px solid #e2e8f0;
+        border-radius: 10px;
+        padding: 18px 20px;
+        margin-bottom: 18px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+    .question {
+        font-size: 13px;
+        color: #64748b;
+        margin-bottom: 14px;
+        font-style: italic;
+    }
+    .slider-row {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+    .end-label {
+        font-weight: 600;
+        font-size: 14px;
+        flex-shrink: 0;
+        min-width: 90px;
+    }
+    .end-label.left { text-align: right; }
+    .end-label.right { text-align: left; }
+
+    input[type="range"] {
+        flex: 1;
+        -webkit-appearance: none;
+        appearance: none;
+        height: 4px;
+        background: #1e293b;
+        border-radius: 2px;
+        outline: none;
+        margin: 12px 0;
+    }
+    input[type="range"]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background: #f5a623;
+        border: 2px solid #c97f0f;
+        cursor: pointer;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    }
+    input[type="range"]::-moz-range-thumb {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background: #f5a623;
+        border: 2px solid #c97f0f;
+        cursor: pointer;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    }
+    input[type="range"]::-moz-range-track {
+        height: 4px;
+        background: #1e293b;
+        border-radius: 2px;
+    }
+
+    .ticks {
+        display: flex;
+        justify-content: space-between;
+        margin: 0 0 4px;
+        padding: 0 102px;
+    }
+    .ticks span {
+        font-size: 10px;
+        color: #cbd5e1;
+        width: 1px;
+    }
+
+    .explanation {
+        margin-top: 12px;
+        padding: 10px 12px;
+        background: #fffbeb;
+        border: 1px solid #fde68a;
+        border-radius: 6px;
+        font-size: 13px;
+        line-height: 1.4;
+    }
+    .explanation .pos {
+        font-weight: 600;
+        color: #b45309;
+        margin-right: 6px;
+    }
+
+    .actions {
+        display: flex;
+        justify-content: center;
+        gap: 12px;
+        margin-top: 8px;
+    }
+    .actions button {
+        padding: 8px 16px;
+        font-size: 14px;
+        background: #1677ff;
+        color: #fff;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+    }
+    .actions button:hover {
+        background: #4096ff;
+    }
+    .actions button.secondary {
+        background: #fff;
+        color: #1e293b;
+        border: 1px solid #d9d9d9;
+    }
+    .actions button.secondary:hover {
+        background: #f1f5f9;
+    }
+
+    @media (max-width: 520px) {
+        .slider-row { flex-direction: column; gap: 6px; }
+        .end-label { min-width: auto; text-align: center !important; }
+        .ticks { display: none; }
+    }
+</style>
+</head>
+<body>
+<div class="wrap">
+    <h1>Team Culture Map</h1>
+    <div class="subtitle">Drag each slider to where your team actually operates today (not where you wish it did). Your changes are saved automatically.</div>
+
+    <div id="sliders"></div>
+
+    <div class="actions">
+        <button class="secondary" id="resetBtn">Reset to midpoint</button>
+    </div>
+</div>
+
+<script>
+    const STORAGE_KEY = 'teamCultureMapValues';
+
+    const SLIDERS = [
+        {
+            id: 'secret-open',
+            left: 'Secret',
+            right: 'Open',
+            question: "Can you see everyone's calendar or is info closely guarded?",
+            descriptions: [
+                "Need-to-know only — most information is confidential by default, even within teams.",
+                "Information is shared with direct manager approval; little visibility beyond your reporting line.",
+                "Most decisions and data stay within a small leadership circle.",
+                "Some info is shared department-wide, but cross-team visibility is limited.",
+                "Calendars and docs are visible within your own team, but not company-wide.",
+                "Most non-sensitive info (roadmaps, docs, plans) is open across teams.",
+                "Calendars, OKRs, and team plans are visible company-wide by default.",
+                "Default is public internal docs; keeping something private requires a reason.",
+                "Salary bands, strategy discussions, and leadership notes are open to all employees.",
+                "Radical transparency — even sensitive financials and most 1:1 notes are visible to everyone."
+            ]
+        },
+        {
+            id: 'oral-written',
+            left: 'Oral',
+            right: 'Written',
+            question: "Do decisions happen over coffee or in 10-page docs?",
+            descriptions: [
+                "Nothing is written down — decisions live in people's heads and hallway chats.",
+                "Quick verbal agreements on calls or in person drive most outcomes.",
+                "Meetings are the primary decision venue; notes are rare or inconsistent.",
+                "Decisions are discussed live, with a brief written follow-up afterward.",
+                "A mix — some decisions get documented, others remain verbal commitments.",
+                "Meetings require a written agenda and produce a short decision summary.",
+                "Async written proposals are the default starting point before any discussion.",
+                "Longer write-ups (briefs, memos) are expected before a meeting is even scheduled.",
+                "Detailed written proposals circulate for review and comment before discussion happens.",
+                "Nothing moves without a thorough written doc — reviewed, versioned, and archived."
+            ]
+        },
+        {
+            id: 'topdown-bottomup',
+            left: 'Top-down',
+            right: 'Bottom-up',
+            question: "Who decides what gets built?",
+            descriptions: [
+                "Leadership decides everything; teams execute without input on direction.",
+                "Senior leaders set priorities; managers translate them downward with little discussion.",
+                "Strategy comes from the top, but managers have some local discretion on execution.",
+                "Leadership sets the goals; teams choose how to get there.",
+                "Shared planning — leadership and teams co-create the roadmap together.",
+                "Teams propose priorities; leadership reviews and signs off.",
+                "Teams largely self-direct, with leadership providing high-level guardrails.",
+                "Individuals and small teams pitch and own initiatives independently.",
+                "Anyone can start a project; leadership ratifies it after the fact.",
+                "Fully decentralized — no central roadmap; teams build what they believe matters."
+            ]
+        },
+        {
+            id: 'fast-deliberate',
+            left: 'Fast',
+            right: 'Deliberate',
+            question: "Do we move fast and break things, or plan everything meticulously?",
+            descriptions: [
+                "Ship constantly and fix issues as they arise — speed over polish, always.",
+                "Strong bias toward action; quick experiments, some breakage is accepted.",
+                "Move quickly on most things, but pause and slow down for high-risk changes.",
+                "Balance of speed and care — quick for small changes, careful for big ones.",
+                "Standard review and checks before shipping, but timelines stay tight.",
+                "Most changes go through a planning and review cycle before launch.",
+                "Significant changes require sign-off from multiple stakeholders before proceeding.",
+                "Thorough risk assessment and rollout planning precede any major change.",
+                "Heavy process — staged rollouts, extensive testing, multiple approval gates.",
+                "Nothing ships without exhaustive planning, review boards, and contingency plans."
+            ]
+        },
+        {
+            id: 'backchannels-frontdoors',
+            left: 'Back channels',
+            right: 'Front doors',
+            question: "Do you Slack someone directly or file a ticket?",
+            descriptions: [
+                "Everything happens in DMs and private chats — no shared or public record.",
+                "People mostly ping individuals directly to get things done.",
+                "Quick asks go via DM; bigger requests get raised in a channel.",
+                "A mix of direct messages and team channels, depending on urgency.",
+                "Team channels are the norm, but DMs still handle sensitive or quick items.",
+                "Most requests go through shared channels or threads, visible to the team.",
+                "Tickets or issues are preferred for tracked work; DMs are for quick clarifications only.",
+                "Formal request processes (tickets, intake forms) are expected for most asks.",
+                "Cross-team requests require a ticket with prioritization and SLAs.",
+                "All requests must go through formal intake processes — no informal shortcuts allowed."
+            ]
+        },
+        {
+            id: 'allocated-available',
+            left: 'Allocated',
+            right: 'Available',
+            question: "Is everyone maxed out or do teams have breathing room?",
+            descriptions: [
+                "Everyone is overbooked — no slack time, constant context-switching, frequent fire drills.",
+                "People run at close to full capacity most weeks with very little buffer.",
+                "Occasional breathing room exists, but unplanned work usually causes slippage.",
+                "Some slack is built in, but it gets absorbed quickly by urgent requests.",
+                "Roughly balanced — planned work plus a modest buffer for the unexpected.",
+                "Teams reserve time each sprint or week for exploration or unplanned work.",
+                "Comfortable capacity — people can pick up new requests without major reshuffling.",
+                "Significant slack; people often have time for side projects or to help others.",
+                "Capacity is intentionally underbooked to absorb surprises and support other teams.",
+                "Abundant availability — people have substantial discretionary time most weeks."
+            ]
+        },
+        {
+            id: 'liquid-crystallized',
+            left: 'Liquid',
+            right: 'Crystallized',
+            question: "Can you change your trajectory or wait your turn?",
+            descriptions: [
+                "Priorities and roles shift constantly — nothing feels fixed for long.",
+                "Plans change frequently in response to new information or pressure.",
+                "Quarterly plans are directional but commonly revised mid-cycle.",
+                "Roadmaps can flex, but core commitments for the quarter are fairly stable.",
+                "A balance — commitments hold for a defined cycle, then get revisited.",
+                "Plans are set per cycle (quarter or sprint) and rarely change once locked.",
+                "Roles, team structures, and roadmaps stay stable for long periods.",
+                "Org structure and priorities are set annually and rarely revisited.",
+                "Long-term commitments and structures are fixed; changing them requires a formal process.",
+                "Highly fixed — roles, plans, and structures rarely change; reorgs are rare events."
+            ]
+        }
+    ];
+
+    const container = document.getElementById('sliders');
+    const resetBtn = document.getElementById('resetBtn');
+
+    function loadValues() {
+        try {
+            const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+            return (saved && typeof saved === 'object') ? saved : {};
+        } catch {
+            return {};
+        }
+    }
+
+    function saveValues(values) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(values));
+    }
+
+    const values = loadValues();
+
+    function buildSlider(slider) {
+        const value = values[slider.id] || 5;
+
+        const block = document.createElement('div');
+        block.className = 'slider-block';
+
+        const question = document.createElement('div');
+        question.className = 'question';
+        question.textContent = slider.question;
+
+        const row = document.createElement('div');
+        row.className = 'slider-row';
+
+        const leftLabel = document.createElement('span');
+        leftLabel.className = 'end-label left';
+        leftLabel.textContent = slider.left;
+
+        const input = document.createElement('input');
+        input.type = 'range';
+        input.min = '1';
+        input.max = '10';
+        input.step = '1';
+        input.value = value;
+        input.dataset.id = slider.id;
+
+        const rightLabel = document.createElement('span');
+        rightLabel.className = 'end-label right';
+        rightLabel.textContent = slider.right;
+
+        row.appendChild(leftLabel);
+        row.appendChild(input);
+        row.appendChild(rightLabel);
+
+        const explanation = document.createElement('div');
+        explanation.className = 'explanation';
+
+        function render(v) {
+            const posSpan = document.createElement('span');
+            posSpan.className = 'pos';
+            posSpan.textContent = v + '/10:';
+            explanation.innerHTML = '';
+            explanation.appendChild(posSpan);
+            explanation.append(slider.descriptions[v - 1]);
+        }
+
+        render(value);
+
+        input.addEventListener('input', () => {
+            const v = parseInt(input.value, 10);
+            render(v);
+            values[slider.id] = v;
+            saveValues(values);
+        });
+
+        block.appendChild(question);
+        block.appendChild(row);
+        block.appendChild(explanation);
+
+        return block;
+    }
+
+    SLIDERS.forEach(slider => container.appendChild(buildSlider(slider)));
+
+    resetBtn.addEventListener('click', () => {
+        SLIDERS.forEach(slider => { values[slider.id] = 5; });
+        saveValues(values);
+        container.innerHTML = '';
+        SLIDERS.forEach(slider => container.appendChild(buildSlider(slider)));
+    });
+</script>
+</body>
+</html>

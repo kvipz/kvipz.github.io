@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Power-Interest Grid</title>
+<style>
+    * { box-sizing: border-box; }
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, sans-serif;
+        margin: 0;
+        padding: 24px 16px 48px;
+        background: #f8fafc;
+        color: #1e293b;
+    }
+    .wrap {
+        max-width: 900px;
+        margin: 0 auto;
+    }
+    h1 {
+        text-align: center;
+        margin-bottom: 4px;
+        font-size: 28px;
+    }
+    .subtitle {
+        text-align: center;
+        color: #64748b;
+        margin-bottom: 24px;
+        font-size: 14px;
+    }
+    .add-row {
+        display: flex;
+        gap: 8px;
+        max-width: 420px;
+        margin: 0 auto 32px;
+    }
+    .add-row input {
+        flex: 1;
+        padding: 8px 12px;
+        font-size: 14px;
+        border: 1px solid #d9d9d9;
+        border-radius: 6px;
+        outline: none;
+    }
+    .add-row input:focus {
+        border-color: #1677ff;
+    }
+    .add-row button {
+        padding: 8px 16px;
+        font-size: 14px;
+        background: #1677ff;
+        color: #fff;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+    }
+    .add-row button:hover {
+        background: #4096ff;
+    }
+    .grid-area {
+        display: flex;
+        justify-content: center;
+    }
+    .axis-vertical {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        height: min(80vw, 600px);
+        margin-right: 8px;
+        padding-block: 24px;
+    }
+    .axis-vertical span {
+        font-weight: 600;
+        font-size: 13px;
+        writing-mode: vertical-rl;
+        transform: rotate(180deg);
+    }
+    .grid-container {
+        position: relative;
+        width: min(80vw, 600px);
+        height: min(80vw, 600px);
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+        border: 2px solid #94a3b8;
+        border-radius: 8px;
+        overflow: hidden;
+        user-select: none;
+    }
+    .quadrant {
+        padding: 12px;
+        display: flex;
+        flex-direction: column;
+    }
+    .quadrant .label {
+        font-weight: 600;
+        font-size: 13px;
+        line-height: 1.3;
+    }
+    .quadrant .sub {
+        font-size: 11px;
+        color: #64748b;
+    }
+    #q-manage-closely { background: #dbeafe; align-items: flex-end; justify-content: flex-start; text-align: right; }
+    #q-keep-satisfied { background: #ede9fe; align-items: flex-start; justify-content: flex-start; text-align: left; }
+    #q-keep-informed { background: #dcfce7; align-items: flex-end; justify-content: flex-end; text-align: right; }
+    #q-monitor { background: #fef9c3; align-items: flex-start; justify-content: flex-end; text-align: left; }
+    /* Grid placement: top-left, top-right, bottom-left, bottom-right */
+    #q-keep-satisfied { grid-area: 1 / 1 / 2 / 2; }
+    #q-manage-closely { grid-area: 1 / 2 / 2 / 3; }
+    #q-monitor { grid-area: 2 / 1 / 3 / 2; }
+    #q-keep-informed { grid-area: 2 / 2 / 3 / 3; }
+    .divider-v {
+        position: absolute;
+        left: 50%;
+        top: 0;
+        bottom: 0;
+        width: 1px;
+        background: #94a3b8;
+    }
+    .divider-h {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: #94a3b8;
+    }
+    .point {
+        position: absolute;
+        transform: translate(-50%, -50%);
+        cursor: grab;
+        background: #fff;
+        border: 1px solid #1677ff;
+        border-radius: 6px;
+        padding: 3px 6px;
+        width: 90px;
+        box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        z-index: 2;
+    }
+    .point:active {
+        cursor: grabbing;
+    }
+    .point .name {
+        font-size: 10px;
+        line-height: 1.2;
+        word-break: break-word;
+        overflow-wrap: break-word;
+        white-space: normal;
+        color: #1e293b;
+    }
+    .point .remove {
+        font-size: 10px;
+        color: #94a3b8;
+        cursor: pointer;
+        flex-shrink: 0;
+        line-height: 1;
+    }
+    .point .remove:hover {
+        color: #ef4444;
+    }
+    .axis-horizontal {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 8px;
+        font-weight: 600;
+        font-size: 13px;
+    }
+</style>
+</head>
+<body>
+<div class="wrap">
+    <h1>Power-Interest Grid</h1>
+    <div class="subtitle">Add stakeholders below, then drag them into the quadrant that fits best. Your changes are saved automatically.</div>
+
+    <div class="add-row">
+        <input type="text" id="nameInput" placeholder="Stakeholder name" maxlength="60">
+        <button id="addBtn">Add</button>
+    </div>
+
+    <div class="grid-area">
+        <div class="axis-vertical">
+            <span>High Power &#9650;</span>
+            <span>&#9660; Low Power</span>
+        </div>
+        <div>
+            <div class="grid-container" id="gridContainer">
+                <div class="quadrant" id="q-manage-closely">
+                    <span class="label">Manage Closely</span>
+                    <span class="sub">High Power &middot; High Interest</span>
+                </div>
+                <div class="quadrant" id="q-keep-satisfied">
+                    <span class="label">Keep Satisfied</span>
+                    <span class="sub">High Power &middot; Low Interest</span>
+                </div>
+                <div class="quadrant" id="q-keep-informed">
+                    <span class="label">Keep Informed</span>
+                    <span class="sub">Low Power &middot; High Interest</span>
+                </div>
+                <div class="quadrant" id="q-monitor">
+                    <span class="label">Monitor with Minimum Effort</span>
+                    <span class="sub">Low Power &middot; Low Interest</span>
+                </div>
+                <div class="divider-v"></div>
+                <div class="divider-h"></div>
+            </div>
+            <div class="axis-horizontal">
+                <span>&#9664; Low Interest</span>
+                <span>High Interest &#9654;</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const STORAGE_KEY = 'powerInterestGridPoints';
+    const grid = document.getElementById('gridContainer');
+    const nameInput = document.getElementById('nameInput');
+    const addBtn = document.getElementById('addBtn');
+
+    let nextId = 1;
+    let points = [];
+
+    function loadPoints() {
+        try {
+            const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+            return Array.isArray(saved) ? saved : [];
+        } catch {
+            return [];
+        }
+    }
+
+    function savePoints() {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(points));
+    }
+
+    function renderPoint(point) {
+        const el = document.createElement('div');
+        el.className = 'point';
+        el.dataset.id = point.id;
+        el.style.left = point.x + '%';
+        el.style.top = point.y + '%';
+
+        const nameSpan = document.createElement('span');
+        nameSpan.className = 'name';
+        nameSpan.textContent = point.name;
+
+        const removeSpan = document.createElement('span');
+        removeSpan.className = 'remove';
+        removeSpan.textContent = '✕';
+        removeSpan.addEventListener('click', () => removePoint(point.id));
+
+        el.appendChild(nameSpan);
+        el.appendChild(removeSpan);
+
+        el.addEventListener('mousedown', (e) => startDrag(e, point.id));
+        el.addEventListener('touchstart', (e) => startDrag(e, point.id), { passive: false });
+
+        grid.appendChild(el);
+    }
+
+    function removePoint(id) {
+        points = points.filter(p => p.id !== id);
+        savePoints();
+        const el = grid.querySelector('.point[data-id="' + id + '"]');
+        if (el) el.remove();
+    }
+
+    function addPoint() {
+        const name = nameInput.value.trim();
+        if (!name) return;
+        const point = { id: nextId++, name, x: 50, y: 50 };
+        points.push(point);
+        savePoints();
+        renderPoint(point);
+        nameInput.value = '';
+        nameInput.focus();
+    }
+
+    let draggingId = null;
+
+    function startDrag(e, id) {
+        e.preventDefault();
+        draggingId = id;
+        window.addEventListener('mousemove', onDragMove);
+        window.addEventListener('mouseup', stopDrag);
+        window.addEventListener('touchmove', onDragMove, { passive: false });
+        window.addEventListener('touchend', stopDrag);
+    }
+
+    function onDragMove(e) {
+        if (draggingId == null) return;
+        e.preventDefault();
+        const point = e.touches ? e.touches[0] : e;
+        const rect = grid.getBoundingClientRect();
+        let x = ((point.clientX - rect.left) / rect.width) * 100;
+        let y = ((point.clientY - rect.top) / rect.height) * 100;
+        x = Math.min(100, Math.max(0, x));
+        y = Math.min(100, Math.max(0, y));
+
+        const data = points.find(p => p.id === draggingId);
+        if (data) {
+            data.x = x;
+            data.y = y;
+        }
+        const el = grid.querySelector('.point[data-id="' + draggingId + '"]');
+        if (el) {
+            el.style.left = x + '%';
+            el.style.top = y + '%';
+        }
+    }
+
+    function stopDrag() {
+        if (draggingId != null) savePoints();
+        draggingId = null;
+        window.removeEventListener('mousemove', onDragMove);
+        window.removeEventListener('mouseup', stopDrag);
+        window.removeEventListener('touchmove', onDragMove);
+        window.removeEventListener('touchend', stopDrag);
+    }
+
+    addBtn.addEventListener('click', addPoint);
+    nameInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') addPoint();
+    });
+
+    // Init
+    points = loadPoints();
+    nextId = points.reduce((max, p) => Math.max(max, p.id), 0) + 1;
+    points.forEach(renderPoint);
+</script>
+</body>
+</html>
