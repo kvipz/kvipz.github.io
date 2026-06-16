@@ -33,21 +33,22 @@ export default function Experience() {
   const nodeRefs = useRef([]);
   const active = timeline[activeIndex];
 
+  // Scroll only the horizontal overflow track, never the page.
+  const centerNode = (index, smooth = false) => {
+    const node = nodeRefs.current[index];
+    const track = trackRef.current;
+    if (!node || !track) return;
+    const target = node.offsetLeft - track.clientWidth / 2 + node.offsetWidth / 2;
+    track.scrollTo({ left: target, behavior: smooth ? 'smooth' : 'auto' });
+  };
+
   useEffect(() => {
-    nodeRefs.current[defaultIndex]?.scrollIntoView({
-      behavior: 'auto',
-      inline: 'center',
-      block: 'nearest',
-    });
+    centerNode(defaultIndex);
   }, [defaultIndex]);
 
   const handleSelect = (index) => {
     setActiveIndex(index);
-    nodeRefs.current[index]?.scrollIntoView({
-      behavior: 'smooth',
-      inline: 'center',
-      block: 'nearest',
-    });
+    centerNode(index, true);
   };
 
   return (
