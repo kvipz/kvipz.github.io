@@ -385,7 +385,7 @@ export const tools = [
     title: 'Team Culture Map',
     description:
       'Interactive sliders for mapping how a team or org actually operates across 7 cultural dimensions — from secrecy to openness, top-down to bottom-up, fast to deliberate, and more.',
-    link: 'https://vip-in-the-cloud.dev/team-culture-map/',
+    link: 'https://kvipz.github.io/team-culture-map/',
     reference: 'Framework from "The Staff Engineer\'s Path" by Tanya Reilly',
   },
   {
@@ -393,7 +393,7 @@ export const tools = [
     title: 'Power-Interest Grid',
     description:
       'Stakeholder mapping tool — add stakeholders and drag them into the quadrant that fits their power and interest level to plan engagement strategy.',
-    link: 'https://vip-in-the-cloud.dev/power-interest-grid/',
+    link: 'https://kvipz.github.io/power-interest-grid/',
     reference: 'Framework from "Platform Engineering" by Camille Fournier & Ian Nowland',
   },
   {
