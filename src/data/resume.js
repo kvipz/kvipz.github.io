@@ -403,4 +403,12 @@ export const tools = [
       'Plans monthly office attendance — tracks holidays, leave, and WFH days for two people and computes the in-office attendance balance for the month.',
     link: 'https://vip-in-the-cloud.dev/office-scheduler/',
   },
+  {
+    icon: 'BookOpen',
+    title: 'First 90 Days',
+    description:
+      'Interactive frameworks from Michael Watkins — assess your situation, map STARS priorities, plan key conversations, and evaluate your team all in one place.',
+    link: 'https://vip-in-the-cloud.dev/first-90-days/',
+    reference: 'Framework from "The First 90 Days" by Michael Watkins',
+  },
 ];

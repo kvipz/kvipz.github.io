@@ -1,11 +1,12 @@
 import { tools } from '../data/resume';
-import { Mic2, SlidersHorizontal, Grid2x2, CalendarRange, ExternalLink } from 'lucide-react';
+import { Mic2, SlidersHorizontal, Grid2x2, CalendarRange, BookOpen, ExternalLink } from 'lucide-react';
 
 const icons = {
   Mic2,
   SlidersHorizontal,
   Grid2x2,
   CalendarRange,
+  BookOpen,
 };
 
 export default function Tools() {
