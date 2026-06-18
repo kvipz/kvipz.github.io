@@ -12,7 +12,7 @@ const icons = {
 export default function Tools() {
   return (
     <section id="tools" className="py-24 px-4">
-      <div className="max-w-5xl mx-auto">
+      <div className="max-w-6xl mx-auto">
         <div className="text-center mb-14">
           <p className="section-subheading">Side Projects</p>
           <h2 className="section-heading">Tools I've Built</h2>
@@ -22,7 +22,7 @@ export default function Tools() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5">
           {tools.map((tool) => {
             const Icon = icons[tool.icon];
             return (
