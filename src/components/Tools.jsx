@@ -1,5 +1,5 @@
 import { tools } from '../data/resume';
-import { Mic2, SlidersHorizontal, Grid2x2, CalendarRange, BookOpen, ExternalLink } from 'lucide-react';
+import { Mic2, SlidersHorizontal, Grid2x2, CalendarRange, BookOpen, Shuffle, ExternalLink } from 'lucide-react';
 
 const icons = {
   Mic2,
@@ -7,6 +7,7 @@ const icons = {
   Grid2x2,
   CalendarRange,
   BookOpen,
+  Shuffle,
 };
 
 export default function Tools() {
@@ -22,7 +23,7 @@ export default function Tools() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {tools.map((tool) => {
             const Icon = icons[tool.icon];
             return (

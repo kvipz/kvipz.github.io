@@ -374,6 +374,13 @@ export const books = {
 
 export const tools = [
   {
+    icon: 'Shuffle',
+    title: 'Pairwise',
+    description:
+      'Weekly pair-planning tool for platform engineering teams — set up your team once, mark weekly availability, and generate support pairs, floats, and engineering pairs that avoid recent repeats.',
+    link: 'https://kvipz.github.io/pairwise/',
+  },
+  {
     icon: 'Mic2',
     title: 'Toastmasters Club App',
     description:
