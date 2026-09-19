@@ -418,4 +418,11 @@ export const tools = [
     link: 'https://vip-in-the-cloud.dev/first-90-days/',
     reference: 'Framework from "The First 90 Days" by Michael Watkins',
   },
+  {
+    icon: 'Disc3',
+    title: 'Wheel of Names',
+    description:
+      'Spinning name picker for standups, draws and raffles — paste a list, spin, and pick what happens to the winner: stay on the wheel, park in a standby queue that releases the longest-waiting name, or drop off entirely. The whole wheel exports and imports as JSON.',
+    link: 'https://vip-in-the-cloud.dev/wheel-of-names/',
+  },
 ];

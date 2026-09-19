@@ -1,5 +1,5 @@
 import { tools } from '../data/resume';
-import { Mic2, SlidersHorizontal, Grid2x2, CalendarRange, BookOpen, Shuffle, ExternalLink } from 'lucide-react';
+import { Mic2, SlidersHorizontal, Grid2x2, CalendarRange, BookOpen, Shuffle, Disc3, ExternalLink } from 'lucide-react';
 
 const icons = {
   Mic2,
@@ -8,6 +8,7 @@ const icons = {
   CalendarRange,
   BookOpen,
   Shuffle,
+  Disc3,
 };
 
 export default function Tools() {
