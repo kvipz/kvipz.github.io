@@ -12,7 +12,7 @@ function BookCard({ book, status }) {
     }`}>
       {/* Reading badge */}
       {isReading && (
-        <div className="absolute top-2 right-2 z-10 flex items-center gap-1 px-2 py-0.5 rounded-full bg-slate-950/75 backdrop-blur-sm border border-sky-500/40 text-sky-400 text-xs font-medium">
+        <div className="absolute top-2 right-2 z-10 flex items-center gap-1 px-2 py-0.5 rounded-full bg-slate-950/75 backdrop-blur-sm border border-sky-500/40 text-sky-300 text-xs font-medium">
           <span className="w-1.5 h-1.5 rounded-full bg-sky-400 animate-pulse" />
           Reading
         </div>
@@ -59,9 +59,9 @@ function BookCard({ book, status }) {
       </div>
 
       {/* Title + author below cover */}
-      <div className={`p-3 ${isReading ? 'bg-sky-950/20' : 'bg-slate-900/60'}`}>
-        <p className="text-white font-semibold text-sm leading-snug line-clamp-2">{book.title}</p>
-        <p className="text-slate-500 text-xs mt-0.5 line-clamp-1">{book.author}</p>
+      <div className={`p-2.5 ${isReading ? 'bg-sky-950/20' : 'bg-slate-900/60'}`}>
+        <p className="text-white font-semibold text-xs sm:text-sm leading-snug line-clamp-2">{book.title}</p>
+        <p className="text-slate-500 text-[11px] sm:text-xs mt-0.5 line-clamp-1">{book.author}</p>
       </div>
     </div>
   );
@@ -70,7 +70,7 @@ function BookCard({ book, status }) {
 export default function Library() {
   return (
     <section id="library" className="py-24 px-4">
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-5xl mx-auto">
         <div className="text-center mb-14">
           <p className="section-subheading">Reading List</p>
           <h2 className="section-heading">My Library</h2>
@@ -90,7 +90,7 @@ export default function Library() {
             <div className="flex-1 h-px bg-slate-800" />
             <span className="text-slate-600 text-sm font-mono">{books.reading.length} books</span>
           </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
+          <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-3">
             {books.reading.map((book) => (
               <BookCard key={book.title} book={book} status="reading" />
             ))}
@@ -107,7 +107,7 @@ export default function Library() {
             <div className="flex-1 h-px bg-slate-800" />
             <span className="text-slate-600 text-sm font-mono">{books.completed.length} books</span>
           </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+          <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-3">
             {books.completed.map((book) => (
               <BookCard key={book.title} book={book} status="completed" />
             ))}

@@ -109,31 +109,67 @@ body,
 
 [data-theme="light"] .tag {
   background-color: rgba(14,165,233,0.08);
-  color: #0284c7;
-  border-color: rgba(14,165,233,0.25);
+  color: #0369a1;
+  border-color: rgba(14,165,233,0.3);
+}
+[data-theme="light"] .tag.text-green-400 {
+  background-color: rgba(22,163,74,0.08);
+  border-color: rgba(22,163,74,0.3);
 }
 
+/* btn-primary @applies text-white, which also pulls in the light-mode
+   .text-white override below, so the white label has to be restored here. */
+[data-theme="light"] .btn-primary        { background-color: #0369a1; color: #ffffff !important; }
+[data-theme="light"] .btn-primary:hover  { background-color: #075985; }
+
 [data-theme="light"] .btn-outline {
-  border-color: rgba(14,165,233,0.5);
-  color: #0284c7;
+  border-color: rgba(3,105,161,0.5);
+  color: #0369a1;
 }
 [data-theme="light"] .btn-outline:hover {
-  border-color: #0284c7;
-  color: #0369a1;
+  border-color: #0369a1;
+  color: #075985;
+}
+
+[data-theme="light"] .section-subheading { color: #0369a1; }
+
+[data-theme="light"] .gradient-text {
+  background-image: linear-gradient(135deg, #0369a1 0%, #4f46e5 100%);
 }
 
 [data-theme="light"] ::-webkit-scrollbar-track { background: #f1f5f9; }
 [data-theme="light"] ::-webkit-scrollbar-thumb { background: #cbd5e1; }
 [data-theme="light"] ::-webkit-scrollbar-thumb:hover { background: #0ea5e9; }
 
-/* Text colour overrides for light mode — fixed text-slate-700 which was
-   previously #94a3b8 (~2.4:1 on white, fails AA); now a properly dark tone. */
+/* Text colour overrides for light mode. Every value keeps at least 4.5:1
+   contrast on the lightest (#fff) and darkest (#e2e8f0) light backgrounds. */
 [data-theme="light"] .text-white   { color: #0f172a !important; }
 [data-theme="light"] .text-slate-300 { color: #334155 !important; }
 [data-theme="light"] .text-slate-400 { color: #475569 !important; }
-[data-theme="light"] .text-slate-500 { color: #64748b !important; }
-[data-theme="light"] .text-slate-600 { color: #94a3b8 !important; }
+[data-theme="light"] .text-slate-500,
+[data-theme="light"] .text-slate-600 { color: #52617a !important; }
 [data-theme="light"] .text-slate-700 { color: #334155 !important; }
+
+/* Accent text: the -400/-500 shades are tuned for the dark background and
+   fall to ~2:1 on white, so light mode uses the -700 shade of each hue. */
+[data-theme="light"] .text-sky-400,
+[data-theme="light"] .text-sky-500    { color: #0369a1 !important; }
+[data-theme="light"] .text-blue-400   { color: #1d4ed8 !important; }
+[data-theme="light"] .text-indigo-400 { color: #4338ca !important; }
+[data-theme="light"] .text-purple-400 { color: #7e22ce !important; }
+[data-theme="light"] .text-orange-400 { color: #c2410c !important; }
+[data-theme="light"] .text-green-400,
+[data-theme="light"] .text-green-500  { color: #15803d !important; }
+
+/* Hover states: without these, the !important base colours above would
+   swallow every hover colour change in light mode. */
+[data-theme="light"] .hover\:text-white:hover,
+[data-theme="light"] .group:hover .group-hover\:text-slate-400 { color: #0f172a !important; }
+[data-theme="light"] .hover\:text-sky-300:hover,
+[data-theme="light"] .hover\:text-sky-400:hover,
+[data-theme="light"] .group:hover .group-hover\:text-sky-300,
+[data-theme="light"] .group:hover .group-hover\:text-sky-100 { color: #075985 !important; }
+[data-theme="light"] .hover\:bg-slate-800\/50:hover { background-color: rgba(203,213,225,0.5) !important; }
 
 /* Background overrides for light mode */
 [data-theme="light"] .bg-slate-900,

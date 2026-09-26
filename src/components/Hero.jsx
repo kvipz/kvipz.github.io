@@ -61,17 +61,7 @@ export default function Hero() {
               </div>
               <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2 mt-2">
                 {personal.traits.map((trait) => (
-                  <span
-                    key={trait}
-                    className="text-xs px-2.5 py-1 rounded-full border font-medium"
-                    style={{
-                      borderColor: 'rgba(56,189,248,0.35)',
-                      color: '#38bdf8',
-                      backgroundColor: 'rgba(56,189,248,0.08)',
-                    }}
-                  >
-                    {trait}
-                  </span>
+                  <span key={trait} className="tag">{trait}</span>
                 ))}
               </div>
             </div>
