@@ -1,8 +1,6 @@
 import { Heart } from 'lucide-react';
 import { personal } from '../data/resume';
-
-const links = ['#about', '#experience', '#skills', '#certifications', '#tools', '#library', '#contact'];
-const labels = ['About', 'Experience', 'Skills', 'Certifications', 'Tools', 'Library', 'Contact'];
+import { navLinks } from '../data/navLinks';
 
 export default function Footer() {
   return (
@@ -14,26 +12,26 @@ export default function Footer() {
             &lt;vipin /&gt;
           </a>
 
-          {/* Nav links */}
+          {/* Nav links — shared with Navbar, single source of truth */}
           <div className="flex flex-wrap justify-center gap-x-6 gap-y-2">
-            {links.map((href, i) => (
+            {navLinks.map((link) => (
               <a
-                key={href}
-                href={href}
+                key={link.href}
+                href={link.href}
                 className="text-slate-500 hover:text-sky-400 text-sm transition-colors"
               >
-                {labels[i]}
+                {link.label}
               </a>
             ))}
           </div>
 
           {/* Credit */}
-          <p className="text-slate-600 text-xs flex items-center gap-1">
+          <p className="text-slate-500 text-xs flex items-center gap-1">
             Built with <Heart size={12} className="text-sky-400" /> by {personal.name}
           </p>
         </div>
 
-        <div className="mt-6 text-center text-slate-700 text-xs">
+        <div className="mt-6 text-center text-slate-500 text-xs">
           © {new Date().getFullYear()} {personal.name} · All rights reserved
         </div>
       </div>

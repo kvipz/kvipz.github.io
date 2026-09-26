@@ -12,7 +12,7 @@ function BookCard({ book, status }) {
     }`}>
       {/* Reading badge */}
       {isReading && (
-        <div className="absolute top-2 right-2 z-10 flex items-center gap-1 px-2 py-0.5 rounded-full bg-sky-500/20 border border-sky-500/40 text-sky-400 text-xs font-medium">
+        <div className="absolute top-2 right-2 z-10 flex items-center gap-1 px-2 py-0.5 rounded-full bg-slate-950/75 backdrop-blur-sm border border-sky-500/40 text-sky-400 text-xs font-medium">
           <span className="w-1.5 h-1.5 rounded-full bg-sky-400 animate-pulse" />
           Reading
         </div>

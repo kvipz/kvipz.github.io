@@ -1,16 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Menu, X, Sun, Moon } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
-
-const navLinks = [
-  { label: 'About', href: '#about' },
-  { label: 'Experience', href: '#experience' },
-  { label: 'Skills', href: '#skills' },
-  { label: 'Certifications', href: '#certifications' },
-  { label: 'Tools', href: '#tools' },
-  { label: 'Library', href: '#library' },
-  { label: 'Contact', href: '#contact' },
-];
+import { navLinks } from '../data/navLinks';
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -24,10 +15,29 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  const handleClick = (href) => {
-    setActive(href);
-    setOpen(false);
-  };
+  // Scroll-spy: keep the active link synced to whichever section is actually
+  // in view, instead of only updating on click (which goes stale on scroll).
+  useEffect(() => {
+    const sections = navLinks.map((l) => document.querySelector(l.href)).filter(Boolean);
+    if (sections.length === 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries.filter((e) => e.isIntersecting);
+        if (visible.length === 0) return;
+        const topMost = visible.reduce((a, b) =>
+          a.boundingClientRect.top < b.boundingClientRect.top ? a : b
+        );
+        setActive(`#${topMost.target.id}`);
+      },
+      { rootMargin: '-40% 0px -55% 0px', threshold: 0 }
+    );
+
+    sections.forEach((s) => observer.observe(s));
+    return () => observer.disconnect();
+  }, []);
+
+  const handleClick = () => setOpen(false);
 
   return (
     <nav
@@ -53,7 +63,7 @@ export default function Navbar() {
               <a
                 key={link.href}
                 href={link.href}
-                onClick={() => handleClick(link.href)}
+                onClick={handleClick}
                 className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 animated-underline ${
                   active === link.href
                     ? 'text-sky-400'
@@ -93,7 +103,7 @@ export default function Navbar() {
               <a
                 key={link.href}
                 href={link.href}
-                onClick={() => handleClick(link.href)}
+                onClick={handleClick}
                 className="block px-4 py-3 rounded-lg text-slate-300 hover:text-white hover:bg-slate-800/50 transition-all font-medium"
               >
                 {link.label}

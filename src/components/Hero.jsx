@@ -1,11 +1,10 @@
 import { useState, useEffect } from 'react';
-import { ArrowDown, Mail, MapPin } from 'lucide-react';
+import { ArrowDown, Mail, MapPin, Clock, Cloud, History } from 'lucide-react';
 import { LinkedInIcon, GitHubIcon } from './SocialIcons';
 import { personal, highlights } from '../data/resume';
-import { yearsFrom, poeticExperience, CAREER_START } from '../utils/dates';
+import { poeticExperience, CAREER_START } from '../utils/dates';
 
 export default function Hero() {
-  const expYears  = yearsFrom(CAREER_START);
   const expPoetic = poeticExperience(CAREER_START);
   const [roleIndex, setRoleIndex] = useState(0);
   const [visible, setVisible] = useState(true);
@@ -60,19 +59,18 @@ export default function Hero() {
                   {personal.roles[roleIndex]}
                 </span>
               </div>
-              {/* All roles as small pills */}
               <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2 mt-2">
-                {personal.roles.map((role, i) => (
+                {personal.traits.map((trait) => (
                   <span
-                    key={role}
-                    className="text-xs px-2.5 py-1 rounded-full border transition-all duration-300 font-medium"
+                    key={trait}
+                    className="text-xs px-2.5 py-1 rounded-full border font-medium"
                     style={{
-                      borderColor: i === roleIndex ? '#38bdf8' : 'rgba(56,189,248,0.2)',
-                      color: i === roleIndex ? '#38bdf8' : '#64748b',
-                      backgroundColor: i === roleIndex ? 'rgba(56,189,248,0.08)' : 'transparent',
+                      borderColor: 'rgba(56,189,248,0.35)',
+                      color: '#38bdf8',
+                      backgroundColor: 'rgba(56,189,248,0.08)',
                     }}
                   >
-                    {role}
+                    {trait}
                   </span>
                 ))}
               </div>
@@ -83,23 +81,23 @@ export default function Hero() {
               {personal.summary}
             </p>
 
-            {/* Meta info */}
+            {/* Meta info — icons unified on lucide, no emoji mixed in */}
             <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 mb-8 animate-fade-in-up">
               <span className="flex items-center gap-1.5 text-slate-400 text-sm">
                 <MapPin size={14} className="text-sky-400" />
                 {personal.location}
               </span>
               <span className="flex items-center gap-1.5 text-slate-400 text-sm">
-                <span className="text-sky-400">⏱</span>
+                <Clock size={14} className="text-sky-400" />
                 {expPoetic} of experience
               </span>
               <span className="flex items-center gap-1.5 text-slate-400 text-sm">
-                <span className="text-sky-400">☁️</span>
+                <Cloud size={14} className="text-sky-400" />
                 AWS · Azure · Kubernetes
               </span>
               <span className="flex items-center gap-1.5 text-slate-400 text-sm">
-                <span className="text-sky-400">🧠</span>
-                Systems Thinking
+                <History size={14} className="text-sky-400" />
+                Previously {personal.previousRole}
               </span>
             </div>
 
@@ -148,26 +146,21 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Key highlights strip */}
+        {/* Key highlights strip — description always visible, not hover-only (fixes touch devices) */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {highlights.map((h, i) => (
             <div key={i} className="card text-center group cursor-default">
               <div className="text-2xl mb-2">{h.icon}</div>
               <div className="text-sky-400 font-bold text-lg font-mono mb-1">{h.metric}</div>
               <div className="text-white font-semibold text-sm mb-2">{h.title}</div>
-              <p className="text-slate-500 text-xs leading-relaxed hidden group-hover:block">
-                {h.description}
-              </p>
-              <p className="text-slate-500 text-xs leading-relaxed group-hover:hidden">
-                {h.description.slice(0, 60)}…
-              </p>
+              <p className="text-slate-500 text-xs leading-relaxed">{h.description}</p>
             </div>
           ))}
         </div>
       </div>
 
       {/* Scroll indicator */}
-      <a href="#about" className="absolute bottom-8 left-1/2 -translate-x-1/2 text-slate-600 hover:text-sky-400 transition-colors animate-bounce" aria-label="Scroll down">
+      <a href="#about" className="absolute bottom-8 left-1/2 -translate-x-1/2 text-slate-500 hover:text-sky-400 transition-colors animate-bounce" aria-label="Scroll down">
         <ArrowDown size={20} />
       </a>
     </section>

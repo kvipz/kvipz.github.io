@@ -1,14 +1,11 @@
-import { poeticExperience, CAREER_START } from '../utils/dates';
-
 export const personal = {
   name: 'Vipin Kumar',
-  title: 'Principal Platform Engineer',
-  subtitle: 'Multi-Cloud Platform Specialist',
-  roles: ['Principal Platform Engineer', 'Cloud Architect', 'SRE', 'Engineering Leader'],
-  get summary() {
-    const exp = poeticExperience(CAREER_START);
-    return `Platform engineering professional with ${exp} of experience across AWS, Azure and Kubernetes ecosystem. Consistent focus on platform-as-a-product thinking, developer experience and operational excellence. Advocate for modern engineering practices and a collaborative approach to platform enablement.`;
-  },
+  title: 'AWS Platform Owner & Engineering Manager',
+  subtitle: 'Platform Engineering Leader',
+  roles: ['AWS Platform Lead', 'Product Owner', 'Engineering Manager', 'Multi-Cloud Architect'],
+  traits: ['Leader Who Codes', 'Strategic Leader', 'Systems Thinker'],
+  previousRole: 'Principal Engineer',
+  summary: 'I own an enterprise AWS platform end to end — roadmap, delivery and operations — and lead a distributed team building a secure-by-default, self-service landing zone. Grounded in platform-as-a-product thinking, developer experience and operational excellence.',
   email: 'k.vipz88@gmail.com',
   phone: '+91-9891302743',
   linkedin: 'https://linkedin.com/in/linked-vip-in',
@@ -18,16 +15,22 @@ export const personal = {
 
 export const highlights = [
   {
-    icon: '⚡',
-    title: 'Operational Excellence',
-    metric: '8x faster',
-    description: 'Enabled proxy whitelisting 8x faster — directly improving developer velocity. Implemented governance monitoring framework for 1000+ AWS instances.',
+    icon: '☁️',
+    title: 'Platform Ownership',
+    metric: 'Enterprise scale',
+    description: 'Own the enterprise AWS platform end to end — roadmap, delivery and operations for a secure-by-default, self-service landing zone spanning hundreds of accounts.',
   },
   {
-    icon: '🤖',
-    title: 'Automation at Scale',
-    metric: '5x provisioning',
-    description: 'Designed a scalable Python-based CLI IPAM solution eliminating manual workflows and delivering 5x faster provisioning cycles.',
+    icon: '📈',
+    title: 'Delivery Throughput',
+    metric: '+50%',
+    description: 'Introduced delivery measurement where none existed and removed bottlenecks — lifting throughput from ~40 to ~60 story points per 4 weeks.',
+  },
+  {
+    icon: '👥',
+    title: 'Distributed Leadership',
+    metric: 'Global team',
+    description: 'Lead a distributed engineering team across India, China and the UK — hiring, coaching and growing careers across time zones.',
   },
   {
     icon: '🎓',
@@ -35,52 +38,61 @@ export const highlights = [
     metric: '200+ engineers',
     description: 'Designed and delivered a 3-day Terraform deep-dive training programme enabling 200+ engineers on IaC best practices.',
   },
-  {
-    icon: '🧠',
-    title: 'Enterprise AI Initiative',
-    metric: 'Incident Copilot',
-    description: 'Leading Incident Copilot Programme covering Intelligent Routing, Incident Analysis, Case Memory, Assisted Automation and Shift Left approaches.',
-  },
 ];
 
-export const milestones = [
+export const education = {
+  degree: 'B.E. Electronics & Communication Engineering',
+  school: 'Delhi College of Engineering, Delhi',
+  year: '2010',
+};
+
+export const eras = [
   {
-    type: 'milestone',
-    year: '1988',
-    title: 'Born',
-    icon: '👶',
-    description: 'Born on 24 November 1988.',
+    title: 'Platform Engineering & Leadership',
+    period: '2021 – Present',
+    blurb: 'Building and owning internal cloud platforms, then leading the team that runs them.',
+    companies: ['Fidelity International'],
   },
   {
-    type: 'milestone',
-    year: '2004',
-    title: 'Completed 10th Grade',
-    icon: '📘',
-    description: 'Finished secondary schooling (10th grade).',
+    title: 'Cloud Architecture',
+    period: '2019 – 2021',
+    blurb: 'Designing and migrating workloads across AWS, Azure and Kubernetes.',
+    companies: ['Barco Electronics Ltd', 'Tech Mahindra Ltd', 'HCL Technologies'],
   },
   {
-    type: 'milestone',
-    year: '2006',
-    title: 'Completed 12th Grade',
-    icon: '📗',
-    description: 'Finished senior secondary schooling (12th grade).',
-  },
-  {
-    type: 'milestone',
-    year: '2010',
-    title: 'B.E. Electronics & Communication Engineering',
-    icon: '🎓',
-    description: 'Graduated from Delhi College of Engineering, Delhi.',
+    title: 'Telecom Networks',
+    period: '2010 – 2019',
+    blurb: 'Running large-scale network infrastructure and automating its monitoring.',
+    companies: ['Ericsson Global India', 'Tata Teleservices Ltd'],
   },
 ];
 
 export const experience = [
   {
+    role: 'AWS Platform Owner & Engineering Manager – AWSOps',
+    company: 'Fidelity International',
+    location: 'Gurugram',
+    period: 'Jul 2026 – Present',
+    current: true,
+    highlights: [
+      'Own the AWS platform end to end — roadmap, delivery and operations across an enterprise estate of hundreds of accounts',
+      'Lead a distributed engineering team across India, China and the UK — hiring, coaching and career development across time zones',
+      'Raised delivery throughput ~50% (~40 → ~60 story points per 4 weeks) by introducing flow measurement, tightening reviews, cutting ad-hoc changes and moving pipeline runs to engineering pairs',
+      'Conceived and secured approval for a multi-region EU resilience initiative — cyber-recovery continuity, reduced regional concentration risk and secure GenAI (Bedrock) access',
+      'Own the Terraform landing-zone codebase — reusable account modules, a YAML configuration layer and Python tooling, delivered through AWS CodePipeline',
+      'Co-own governance-gated account vending with Security, Governance and Architecture: an approved ServiceNow request auto-raises a PR, and the pipeline provisions a baselined, network-connected account',
+      'Deliver secure-by-default accounts through policy-as-code — preventive SCP guardrails, automated remediation, Security Hub, GuardDuty and IAM Identity Center with permission boundaries',
+      'Run hybrid networking — Transit Gateway hub-and-spoke, Route 53 Resolver DNS, SD-WAN on-prem connectivity and a central egress proxy with SLA-backed allow-listing',
+      'Platform lead for ISO 27001 and internal/external audits under EU DORA; enforce change quality with automated checks, staged rollouts, two-person review, on-call and RCAs',
+      'Champion AI-assisted engineering and docs-as-code; own tagging standards with FinOps and support emerging platforms on architecture and operations',
+    ],
+  },
+  {
     role: 'Principal Engineer – AzureOps',
     company: 'Fidelity International',
     location: 'Gurugram',
-    period: 'Aug 2024 – Present',
-    current: true,
+    period: 'Aug 2024 – Jul 2026',
+    current: false,
     highlights: [
       'Automated IP Allocation: Python-based CLI IPAM delivering 5x faster provisioning',
       'Workload Monitoring: Real-time health alerting via Azure Functions & Azure Monitor',
@@ -177,61 +189,57 @@ export const experience = [
   },
 ];
 
-// Chronological combination of life milestones and work experience, oldest first.
-export const timeline = [
-  ...milestones,
-  ...experience
-    .slice()
-    .reverse()
-    .map((job) => ({
-      type: 'job',
-      year: (job.period.match(/\d{4}/) || [''])[0],
-      ...job,
-    })),
-];
-
-export const skills = [
-  {
-    category: 'Cloud Platforms',
-    icon: '☁️',
-    items: ['AWS', 'Azure', 'Kubernetes'],
-  },
-  {
-    category: 'Kubernetes Ecosystem',
-    icon: '⚙️',
-    items: ['EKS', 'kubeadm', 'Helm', 'Kustomize', 'Flannel', 'Calico', 'Nginx Ingress', 'Istio'],
-  },
-  {
-    category: 'CI/CD & IaC',
-    icon: '🔄',
-    items: ['Terraform', 'Terragrunt', 'GitHub Actions', 'Azure DevOps', 'AWS CodePipeline', 'Jenkins'],
-  },
-  {
-    category: 'Programming',
-    icon: '💻',
-    items: ['Python', 'Shell Scripting', 'PowerShell', 'Golang (Basic)', 'JavaScript (Basic)'],
-  },
-  {
-    category: 'Networking',
-    icon: '🌐',
-    items: ['VPC', 'Transit Gateway', 'Direct Connect', 'VWAN', 'ExpressRoute', 'Private Endpoint', 'Azure Firewall', 'Azure DNS', 'NSG'],
-  },
-  {
-    category: 'Monitoring & Observability',
-    icon: '📊',
-    items: ['CloudWatch', 'Azure Monitor', 'Log Analytics', 'Grafana', 'Prometheus', 'ELK', 'Application Insights'],
-  },
-  {
-    category: 'Security',
-    icon: '🔐',
-    items: ['IAM', 'SCPs', 'Azure Policy', 'Azure Entra ID', 'Key Vault', 'RBAC', 'Security Groups', 'HashiCorp Vault'],
-  },
-  {
-    category: 'Platform Engineering',
-    icon: '🏗️',
-    items: ['Platform-as-a-Product', 'DORA Metrics', 'Developer Experience', 'Inner Source', 'Agile / Kanban', 'Team Transformation'],
-  },
-];
+export const skills = {
+  core: [
+    {
+      icon: 'Cloud',
+      title: 'AWS Platforms',
+      summary: 'Multi-account landing zones, governed account vending and secure baselines at enterprise scale.',
+      certs: ['SAA-C01'],
+      items: ['AWS Organizations', 'Landing Zones', 'Account Vending', 'IAM Identity Center', 'Permission Boundaries', 'AWS CodePipeline', 'FinOps Tagging'],
+    },
+    {
+      icon: 'FileCode2',
+      title: 'Infrastructure as Code',
+      summary: 'Reusable Terraform modules and config-driven pipelines that other teams build on.',
+      certs: ['TF-002'],
+      items: ['Terraform', 'Terragrunt', 'Inner-Source Modules', 'GitHub Actions', 'Azure DevOps', 'Jenkins'],
+    },
+    {
+      icon: 'Network',
+      title: 'Cloud Networking',
+      summary: 'Hybrid hub-and-spoke connectivity, DNS and controlled egress between cloud and on-prem.',
+      certs: ['ANS-C01'],
+      items: ['VPC', 'Transit Gateway', 'Direct Connect', 'Route 53 Resolver', 'SD-WAN', 'Egress Proxy', 'Azure VWAN', 'ExpressRoute', 'Private Endpoint', 'Azure Firewall', 'Azure DNS', 'NSG'],
+    },
+    {
+      icon: 'ShieldCheck',
+      title: 'Security & Compliance',
+      summary: 'Preventive guardrails and automated remediation in code, backed by audit-ready controls.',
+      certs: [],
+      items: ['Policy-as-Code', 'SCPs', 'Security Hub', 'GuardDuty', 'HashiCorp Vault', 'ISO 27001', 'EU DORA'],
+    },
+    {
+      icon: 'Container',
+      title: 'Kubernetes',
+      summary: 'Cluster operations and migrations, from self-managed kubeadm clusters to EKS.',
+      certs: ['CKA', 'CKAD'],
+      items: ['EKS', 'kubeadm', 'Helm', 'Kustomize', 'Istio', 'Nginx Ingress', 'Calico', 'Flannel'],
+    },
+    {
+      icon: 'CloudCog',
+      title: 'Azure Platforms',
+      summary: 'Compliant-by-default Azure environments with policy guardrails and event-driven automation.',
+      certs: ['AZ-303/304'],
+      items: ['Azure Policy', 'Entra ID', 'RBAC', 'Key Vault', 'Azure Functions'],
+    },
+  ],
+  toolbox: [
+    { label: 'Languages', items: ['Python', 'Shell', 'PowerShell', 'Go (working knowledge)', 'JavaScript (working knowledge)'] },
+    { label: 'Observability', items: ['CloudWatch', 'Azure Monitor', 'Log Analytics', 'Application Insights', 'Grafana', 'Prometheus', 'ELK'] },
+    { label: 'Ways of working', items: ['Platform-as-a-Product', 'Developer Experience', 'DORA Metrics', 'Docs-as-Code', 'AI-Assisted Engineering', 'Agile / Kanban'] },
+  ],
+};
 
 export const certifications = [
   {
@@ -302,10 +310,10 @@ export const certifications = [
 export const books = {
   reading: [
     {
-      title: "The Culture Map",
-      author: "Erin Meyer",
-      cover: "https://covers.openlibrary.org/b/id/10854287-L.jpg",
-      note: "Decoding how people think, lead, and get things done across cultures.",
+      title: "Crucial Conversations",
+      author: "Joseph Grenny, Kerry Patterson et al.",
+      cover: "https://covers.openlibrary.org/b/isbn/9781260474183-L.jpg",
+      note: "Tools for talking when stakes are high — and staying in dialogue when emotions run strong.",
     },
     {
       title: "The 48 Laws of Power",
@@ -333,6 +341,12 @@ export const books = {
     },
   ],
   completed: [
+    {
+      title: "The Culture Map",
+      author: "Erin Meyer",
+      cover: "https://covers.openlibrary.org/b/id/10854287-L.jpg",
+      note: "Decoding how people think, lead, and get things done across cultures.",
+    },
     {
       title: "Platform Engineering",
       author: "Camille Fournier & Ian Nowland",

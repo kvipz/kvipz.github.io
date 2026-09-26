@@ -1,158 +1,129 @@
-import { useState, useRef, useEffect } from 'react';
-import { timeline } from '../data/resume';
+import { useState } from 'react';
+import { ChevronDown, GraduationCap } from 'lucide-react';
+import { experience, eras, education } from '../data/resume';
 
-const NODE_WIDTH = 160;
+const VISIBLE_BULLETS = 4;
 
-// Group consecutive jobs at the same company so they can be shown as a cluster.
-function buildCompanyGroups() {
-  const groups = [];
-  let i = 0;
-  while (i < timeline.length) {
-    const item = timeline[i];
-    if (item.type === 'job') {
-      let j = i;
-      while (j + 1 < timeline.length && timeline[j + 1].type === 'job' && timeline[j + 1].company === item.company) {
-        j++;
-      }
-      if (j > i) groups.push({ start: i, end: j, company: item.company });
-      i = j + 1;
-    } else {
-      i++;
-    }
-  }
-  return groups;
+function companiesFor(era) {
+  return era.companies.map((company) => {
+    const roles = experience.filter((job) => job.company === company);
+    const start = roles[roles.length - 1].period.split('–')[0].trim();
+    const end = (roles[0].period.split('–')[1] || '').trim();
+    return {
+      company,
+      location: roles[0].location,
+      period: end ? `${start} – ${end}` : start,
+      roles,
+    };
+  });
 }
 
-const companyGroups = buildCompanyGroups();
-const groupedIndices = new Set(companyGroups.flatMap((g) => Array.from({ length: g.end - g.start + 1 }, (_, k) => g.start + k)));
+function Role({ job, isLast }) {
+  const [expanded, setExpanded] = useState(false);
+  const hidden = job.highlights.length - VISIBLE_BULLETS;
+  const collapsible = hidden > 1;
+  const bullets = expanded || !collapsible ? job.highlights : job.highlights.slice(0, VISIBLE_BULLETS);
+
+  return (
+    <li className={`relative pl-7 ${isLast ? '' : 'pb-8'}`}>
+      {!isLast && <span className="absolute left-[5px] top-4 bottom-0 w-px bg-slate-800" />}
+      <span
+        className={`absolute left-0 top-1.5 w-3 h-3 rounded-full border-2 ${
+          job.current ? 'bg-sky-400 border-sky-400 animate-pulse-slow' : 'border-slate-600'
+        }`}
+      />
+
+      <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 mb-3">
+        <div className="flex flex-wrap items-center gap-2">
+          <h4 className="text-white font-semibold leading-snug">{job.role}</h4>
+          {job.current && (
+            <span className="tag text-green-400 bg-green-400/10 border-green-400/20">Current</span>
+          )}
+        </div>
+        <span className="text-slate-500 text-xs font-mono whitespace-nowrap">{job.period}</span>
+      </div>
+
+      <ul className="space-y-2">
+        {bullets.map((h) => (
+          <li key={h} className="flex items-start gap-2.5 text-slate-400 text-sm leading-relaxed">
+            <span className="mt-2 flex-shrink-0 w-1 h-1 rounded-full bg-sky-400/70" />
+            {h}
+          </li>
+        ))}
+      </ul>
+
+      {collapsible && (
+        <button
+          onClick={() => setExpanded((v) => !v)}
+          aria-expanded={expanded}
+          className="mt-3 inline-flex items-center gap-1 text-sky-500 hover:text-sky-400 text-xs font-medium transition-colors"
+        >
+          {expanded ? 'Show less' : `Show ${hidden} more`}
+          <ChevronDown size={14} className={`transition-transform ${expanded ? 'rotate-180' : ''}`} />
+        </button>
+      )}
+    </li>
+  );
+}
 
 export default function Experience() {
-  const defaultIndex = timeline.length - 1; // latest entry
-  const [activeIndex, setActiveIndex] = useState(defaultIndex);
-  const trackRef = useRef(null);
-  const nodeRefs = useRef([]);
-  const active = timeline[activeIndex];
-
-  // Scroll only the horizontal overflow track, never the page.
-  const centerNode = (index, smooth = false) => {
-    const node = nodeRefs.current[index];
-    const track = trackRef.current;
-    if (!node || !track) return;
-    const target = node.offsetLeft - track.clientWidth / 2 + node.offsetWidth / 2;
-    track.scrollTo({ left: target, behavior: smooth ? 'smooth' : 'auto' });
-  };
-
-  useEffect(() => {
-    centerNode(defaultIndex);
-  }, [defaultIndex]);
-
-  const handleSelect = (index) => {
-    setActiveIndex(index);
-    centerNode(index, true);
-  };
-
   return (
     <section id="experience" className="py-24 px-4 theme-section-alt">
       <div className="max-w-5xl mx-auto">
-        <div className="text-center mb-14">
+        <div className="text-center mb-16">
           <p className="section-subheading">Career Journey</p>
           <h2 className="section-heading">My Timeline</h2>
-          <div className="w-12 h-1 bg-gradient-to-r from-sky-400 to-indigo-400 rounded-full mx-auto mt-4" />
+          <div className="w-12 h-1 bg-gradient-to-r from-sky-400 to-indigo-400 rounded-full mx-auto mt-4 mb-5" />
+          <p className="text-slate-400 max-w-xl mx-auto">
+            Three chapters — from telecom networks, through cloud architecture, to owning and leading
+            enterprise platforms.
+          </p>
         </div>
 
-        {/* Horizontal scrollable timeline */}
-        <div ref={trackRef} className="overflow-x-auto pb-2 -mx-4 px-4">
-          <div
-            className="relative flex items-start pt-2"
-            style={{ minWidth: `${timeline.length * NODE_WIDTH}px` }}
-          >
-            {/* Base line */}
-            <div className="absolute left-0 right-0 top-2 h-px bg-slate-800" />
-            {/* Progress line up to active node */}
-            <div
-              className="absolute left-0 top-2 h-px bg-gradient-to-r from-sky-400 to-indigo-400 transition-all duration-300"
-              style={{ width: `${(activeIndex / (timeline.length - 1)) * 100}%` }}
-            />
+        <div className="space-y-16">
+          {eras.map((era, i) => (
+            <div key={era.title} className="grid grid-cols-1 lg:grid-cols-[220px_1fr] gap-6 lg:gap-10">
+              <header className="lg:sticky lg:top-24 self-start">
+                <p className="text-sky-500 font-mono text-xs uppercase tracking-widest">
+                  Chapter {String(i + 1).padStart(2, '0')} · {era.period}
+                </p>
+                <h3 className="text-white text-xl font-bold mt-2 leading-snug">{era.title}</h3>
+                <p className="text-slate-500 text-sm leading-relaxed mt-2">{era.blurb}</p>
+              </header>
 
-            {timeline.map((item, i) => {
-              const isActive = i === activeIndex;
-              const inGroup = groupedIndices.has(i);
-              const label = item.type === 'job' ? item.role : item.title;
-
-              let dotClass;
-              if (isActive) {
-                dotClass = 'bg-sky-400 border-sky-400 shadow-lg shadow-sky-400/40 scale-125';
-              } else if (inGroup) {
-                dotClass = 'bg-navy-900 border-violet-400/50 group-hover:border-violet-400';
-              } else if (item.type === 'milestone') {
-                dotClass = 'bg-navy-900 border-indigo-400/50 group-hover:border-indigo-400';
-              } else {
-                dotClass = 'bg-navy-900 border-slate-600 group-hover:border-sky-400/70';
-              }
-
-              return (
-                <button
-                  key={i}
-                  ref={(el) => (nodeRefs.current[i] = el)}
-                  onClick={() => handleSelect(i)}
-                  className="relative z-10 flex flex-col items-center flex-shrink-0 group"
-                  style={{ width: `${NODE_WIDTH}px` }}
-                >
-                  <span className={`w-4 h-4 rounded-full border-2 transition-all duration-200 ${dotClass}`} />
-                  <span className="mt-2 text-xs font-mono text-slate-500">{item.year}</span>
-                  <span
-                    className={`mt-1 text-xs text-center leading-snug px-2 line-clamp-2 ${
-                      isActive ? 'text-white font-medium' : 'text-slate-500'
-                    }`}
-                  >
-                    {label}
-                  </span>
-                </button>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* Detail panel */}
-        <div className="card mt-6">
-          {active.type === 'milestone' ? (
-            <div className="flex items-start gap-4">
-              <span className="text-3xl flex-shrink-0">{active.icon}</span>
-              <div>
-                <div className="flex flex-wrap items-center gap-2 mb-1">
-                  <h3 className="text-white font-bold text-lg leading-tight">{active.title}</h3>
-                  <span className="text-slate-500 text-sm font-mono">{active.year}</span>
-                </div>
-                <p className="text-slate-400 text-sm leading-relaxed">{active.description}</p>
-              </div>
-            </div>
-          ) : (
-            <div>
-              <div className="flex flex-wrap items-center gap-2 mb-1">
-                <h3 className="text-white font-bold text-base sm:text-lg leading-tight">{active.role}</h3>
-                {active.current && (
-                  <span className="tag text-green-400 bg-green-400/10 border-green-400/20">
-                    Current
-                  </span>
-                )}
-              </div>
-              <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mb-4">
-                <span className="text-sky-400 font-semibold text-sm">{active.company}</span>
-                <span className="text-slate-600 text-xs">·</span>
-                <span className="text-slate-500 text-sm">{active.location}</span>
-                <span className="text-slate-600 text-xs">·</span>
-                <span className="text-slate-500 text-sm font-mono">{active.period}</span>
-              </div>
-              <ul className="space-y-2">
-                {active.highlights.map((h, i) => (
-                  <li key={i} className="flex items-start gap-2.5 text-slate-400 text-sm leading-relaxed">
-                    <span className="mt-1.5 flex-shrink-0 w-1.5 h-1.5 rounded-full bg-sky-400/60" />
-                    {h}
-                  </li>
+              <div className="space-y-4">
+                {companiesFor(era).map((c) => (
+                  <article key={c.company} className="card">
+                    <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 mb-6">
+                      <h3 className="text-sky-400 font-semibold">{c.company}</h3>
+                      <span className="text-slate-500 text-xs">
+                        {c.location}
+                        {c.roles.length > 1 && <> · {c.period} · {c.roles.length} roles</>}
+                      </span>
+                    </div>
+                    <ol>
+                      {c.roles.map((job, j) => (
+                        <Role key={job.role} job={job} isLast={j === c.roles.length - 1} />
+                      ))}
+                    </ol>
+                  </article>
                 ))}
-              </ul>
+              </div>
             </div>
-          )}
+          ))}
+
+          <div className="grid grid-cols-1 lg:grid-cols-[220px_1fr] gap-6 lg:gap-10">
+            <p className="text-sky-500 font-mono text-xs uppercase tracking-widest lg:pt-1">
+              Where it started · {education.year}
+            </p>
+            <div className="flex items-start gap-3">
+              <GraduationCap size={20} className="text-sky-500 flex-shrink-0 mt-0.5" />
+              <div>
+                <p className="text-white font-medium">{education.degree}</p>
+                <p className="text-slate-500 text-sm">{education.school}</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>

@@ -73,7 +73,8 @@ export default function Contact() {
             ))}
           </div>
 
-          {/* CTA card */}
+          {/* CTA card — only email is repeated here as the primary action;
+              LinkedIn is dropped since it's already listed on the left. */}
           <div className="card glow text-center py-10">
             <div className="text-4xl mb-4">👋</div>
             <h3 className="text-white font-bold text-xl mb-3">Let's Work Together</h3>
@@ -86,15 +87,6 @@ export default function Contact() {
             >
               <Send size={16} />
               Send Me An Email
-            </a>
-            <a
-              href={personal.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-outline justify-center w-full mt-3"
-            >
-              <LinkedInIcon size={16} />
-              Connect on LinkedIn
             </a>
           </div>
         </div>

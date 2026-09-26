@@ -17,6 +17,17 @@
   ::-webkit-scrollbar-thumb { border-radius: 3px; }
 }
 
+/* Respect reduced-motion preference: kill the always-on decorative animations
+   (fade-ins, pulse, bounce) instead of forcing motion on everyone. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
 @layer components {
   .section-heading {
     @apply text-3xl md:text-4xl font-bold mb-2;
@@ -115,13 +126,14 @@ body,
 [data-theme="light"] ::-webkit-scrollbar-thumb { background: #cbd5e1; }
 [data-theme="light"] ::-webkit-scrollbar-thumb:hover { background: #0ea5e9; }
 
-/* Text colour overrides for light mode */
+/* Text colour overrides for light mode — fixed text-slate-700 which was
+   previously #94a3b8 (~2.4:1 on white, fails AA); now a properly dark tone. */
 [data-theme="light"] .text-white   { color: #0f172a !important; }
 [data-theme="light"] .text-slate-300 { color: #334155 !important; }
 [data-theme="light"] .text-slate-400 { color: #475569 !important; }
 [data-theme="light"] .text-slate-500 { color: #64748b !important; }
 [data-theme="light"] .text-slate-600 { color: #94a3b8 !important; }
-[data-theme="light"] .text-slate-700 { color: #94a3b8 !important; }
+[data-theme="light"] .text-slate-700 { color: #334155 !important; }
 
 /* Background overrides for light mode */
 [data-theme="light"] .bg-slate-900,

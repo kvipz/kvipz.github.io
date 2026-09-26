@@ -35,7 +35,7 @@ export default function Certifications() {
               href={cert.credly}
               target="_blank"
               rel="noopener noreferrer"
-              className={`group flex flex-col items-center text-center p-6 rounded-xl border border-slate-800 theme-card transition-all duration-300 hover:shadow-lg ${borderColors[cert.color]}`}
+              className={`card group flex flex-col items-center text-center hover:shadow-lg ${borderColors[cert.color]}`}
             >
               {/* Badge image */}
               <div className="relative w-28 h-28 mb-5 flex items-center justify-center">
