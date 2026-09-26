@@ -168,6 +168,7 @@ body,
 [data-theme="light"] .hover\:text-sky-300:hover,
 [data-theme="light"] .hover\:text-sky-400:hover,
 [data-theme="light"] .group:hover .group-hover\:text-sky-300,
+[data-theme="light"] .group:hover .group-hover\:text-sky-400,
 [data-theme="light"] .group:hover .group-hover\:text-sky-100 { color: #075985 !important; }
 [data-theme="light"] .hover\:bg-slate-800\/50:hover { background-color: rgba(203,213,225,0.5) !important; }
 

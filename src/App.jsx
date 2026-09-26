@@ -5,7 +5,7 @@ import Experience from './components/Experience';
 import Skills from './components/Skills';
 import Certifications from './components/Certifications';
 import Tools from './components/Tools';
-import Library from './components/Library';
+import Beyond from './components/Beyond';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 
@@ -19,7 +19,7 @@ export default function App() {
       <Skills />
       <Certifications />
       <Tools />
-      <Library />
+      <Beyond />
       <Contact />
       <Footer />
     </div>

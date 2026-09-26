@@ -10,6 +10,7 @@ export const personal = {
   phone: '+91-9891302743',
   linkedin: 'https://linkedin.com/in/linked-vip-in',
   github: 'https://github.com/kvipz',
+  cv: '/Vipin_Kumar_Resume.pdf',
   location: 'Gurugram, India',
 };
 
@@ -440,3 +441,28 @@ export const tools = [
     link: 'https://vip-in-the-cloud.dev/wheel-of-names/',
   },
 ];
+
+const flickrPhoto = (id, secret, title) => ({
+  title,
+  image: `https://live.staticflickr.com/65535/${id}_${secret}_c.jpg`,
+  link: `https://www.flickr.com/photos/204645078@N07/${id}/`,
+});
+
+export const photography = {
+  profile: 'https://www.flickr.com/photos/204645078@N07/',
+  photos: [
+    flickrPhoto('55323011502', '447c606ac1', 'Wing it!'),
+    flickrPhoto('55324374625', 'ef52a2ebca', 'Immense'),
+    flickrPhoto('55323043677', '0ed9249729', 'Slumber'),
+    flickrPhoto('55324756083', '34d32286ab', 'Four Shades of Chaukhamba'),
+    flickrPhoto('55324374205', '4a132ebb84', 'Watch'),
+    flickrPhoto('55323946861', '3bf3b9f864', 'Food Chain Magnate'),
+  ],
+};
+
+export const speaking = {
+  videoId: 'F7F_BAxe_Fs',
+  title: 'Introduction to Toastmasters Mentoring',
+  description: 'A Toastmasters speech introducing mentoring — delivered to a hybrid audience, in the room and online.',
+  url: 'https://www.youtube.com/watch?v=F7F_BAxe_Fs',
+};

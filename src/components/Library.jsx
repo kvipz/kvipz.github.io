@@ -1,5 +1,6 @@
 import { books } from '../data/resume';
 import { BookOpen } from 'lucide-react';
+import SubHeading from './SubHeading';
 
 function BookCard({ book, status }) {
   const isReading = status === 'reading';
@@ -69,51 +70,45 @@ function BookCard({ book, status }) {
 
 export default function Library() {
   return (
-    <section id="library" className="py-24 px-4">
-      <div className="max-w-5xl mx-auto">
-        <div className="text-center mb-14">
-          <p className="section-subheading">Reading List</p>
-          <h2 className="section-heading">My Library</h2>
-          <div className="w-12 h-1 bg-gradient-to-r from-sky-400 to-indigo-400 rounded-full mx-auto mt-4" />
-          <p className="text-slate-500 mt-4 text-sm max-w-xl mx-auto">
-            Books that have shaped how I think about engineering, leadership, and culture.
-          </p>
-        </div>
+    <div id="library" className="scroll-mt-24">
+      <SubHeading eyebrow="Reading List" title="My Library" />
+      <p className="text-slate-500 text-sm -mt-5 mb-8">
+        Books that have shaped how I think about engineering, leadership, and culture.
+      </p>
 
-        {/* Currently Reading */}
-        <div className="mb-14">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-sky-400 animate-pulse" />
-              <h3 className="text-white font-bold text-lg">Currently Reading</h3>
-            </div>
-            <div className="flex-1 h-px bg-slate-800" />
-            <span className="text-slate-600 text-sm font-mono">{books.reading.length} books</span>
+      {/* Currently Reading */}
+      <div className="mb-14">
+        <div className="flex items-center gap-3 mb-6">
+          <div className="flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-sky-400 animate-pulse" />
+            <h3 className="text-white font-bold text-lg">Currently Reading</h3>
           </div>
-          <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-3">
-            {books.reading.map((book) => (
-              <BookCard key={book.title} book={book} status="reading" />
-            ))}
-          </div>
+          <div className="flex-1 h-px bg-slate-800" />
+          <span className="text-slate-600 text-sm font-mono">{books.reading.length} books</span>
         </div>
-
-        {/* Completed */}
-        <div>
-          <div className="flex items-center gap-3 mb-6">
-            <div className="flex items-center gap-2">
-              <span className="text-slate-400">✓</span>
-              <h3 className="text-white font-bold text-lg">Completed</h3>
-            </div>
-            <div className="flex-1 h-px bg-slate-800" />
-            <span className="text-slate-600 text-sm font-mono">{books.completed.length} books</span>
-          </div>
-          <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-3">
-            {books.completed.map((book) => (
-              <BookCard key={book.title} book={book} status="completed" />
-            ))}
-          </div>
+        <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-3">
+          {books.reading.map((book) => (
+            <BookCard key={book.title} book={book} status="reading" />
+          ))}
         </div>
       </div>
-    </section>
+
+      {/* Completed */}
+      <div>
+        <div className="flex items-center gap-3 mb-6">
+          <div className="flex items-center gap-2">
+            <span className="text-slate-400">✓</span>
+            <h3 className="text-white font-bold text-lg">Completed</h3>
+          </div>
+          <div className="flex-1 h-px bg-slate-800" />
+          <span className="text-slate-600 text-sm font-mono">{books.completed.length} books</span>
+        </div>
+        <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-3">
+          {books.completed.map((book) => (
+            <BookCard key={book.title} book={book} status="completed" />
+          ))}
+        </div>
+      </div>
+    </div>
   );
 }

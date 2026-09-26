@@ -1,8 +1,6 @@
-import { ageString, poeticExperience, CAREER_START, DAUGHTER_BORN } from '../utils/dates';
-import {
-  ExternalLink, Building2, BarChart3, Code2, Users, GraduationCap,
-  MapPin, Baby, Mic2, Trophy, BookOpen, Camera, Mountain, Plane, Bot,
-} from 'lucide-react';
+import { poeticExperience, CAREER_START } from '../utils/dates';
+import { Building2, BarChart3, Code2, Users, GraduationCap } from 'lucide-react';
+import SubHeading from './SubHeading';
 
 const principles = [
   {
@@ -32,71 +30,8 @@ const principles = [
   },
 ];
 
-const getPersonalFacts = (daughterAge) => [
-  {
-    icon: MapPin,
-    title: 'Delhi Roots, Gurugram Based',
-    text: 'Born and brought up in Delhi — now based in Gurugram, right in the heart of India\'s tech corridor.',
-  },
-  {
-    icon: Baby,
-    title: 'Proud Dad',
-    text: `Father to a wonderful ${daughterAge} old daughter who keeps life joyful, humbling, and wonderfully chaotic.`,
-  },
-  {
-    icon: Mic2,
-    title: 'Public Speaker & Storyteller',
-    text: 'Passionate about public speaking and training. I love explaining technology, leadership, and engineering through storytelling — making the complex feel human.',
-  },
-  {
-    icon: Trophy,
-    title: 'Toastmaster & Ex VP-Education',
-    text: 'Active Toastmaster, former VP-Education — driving club excellence by applying product thinking and pushing members to pursue their speaking goals relentlessly.',
-    link: 'https://toastthemost.github.io',
-    linkText: 'Club App',
-  },
-  {
-    icon: BookOpen,
-    title: 'Reluctant Reader Turned Book Lover',
-    text: 'I\'ll be honest — I hated reading books most of my life. Picked it up more recently and I\'m genuinely proud of that. The shelf is growing.',
-  },
-  {
-    icon: Camera,
-    title: 'Photography — Nikon D7500',
-    text: 'Photography is a real passion. I shoot on my Nikon D7500, primarily landscape — but slowly trying my hand at wildlife. Not succeeded yet 😄',
-  },
-  {
-    icon: Mountain,
-    title: 'Himalayan Trekker',
-    text: 'Love trekking in the Himalayas. Done the Roopkund Trek in Uttarakhand and Tarsar Marsar Trek in Kashmir — both stunning and humbling experiences.',
-  },
-  {
-    icon: Plane,
-    title: 'Traveller at Heart',
-    text: 'Covered most states across India. Only 4 countries so far internationally — but the list is growing and the wanderlust isn\'t going anywhere.',
-  },
-  {
-    icon: Bot,
-    title: 'AI & Emerging Tech',
-    text: 'Actively exploring AI-powered tools and their real-world applications in platform engineering and operations.',
-  },
-];
-
-function SubHeading({ eyebrow, title }) {
-  return (
-    <div className="flex items-end gap-4 mb-8">
-      <div>
-        <p className="section-subheading">{eyebrow}</p>
-        <h3 className="text-2xl md:text-3xl font-bold text-white">{title}</h3>
-      </div>
-      <div className="flex-1 h-px mb-3 bg-gradient-to-r from-slate-700 to-transparent hidden sm:block" />
-    </div>
-  );
-}
-
 export default function About() {
   const expPoetic = poeticExperience(CAREER_START);
-  const personalFacts = getPersonalFacts(ageString(DAUGHTER_BORN));
 
   return (
     <section id="about" className="py-24 px-4">
@@ -158,7 +93,7 @@ export default function About() {
         </div>
 
         {/* ── How I work: each belief is paired with evidence ── */}
-        <div className="mb-24">
+        <div>
           <SubHeading eyebrow="Principles" title="How I Work" />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             {principles.map((p, i) => (
@@ -181,33 +116,6 @@ export default function About() {
                   <p className="text-slate-500 text-sm leading-relaxed">{p.practice}</p>
                 </div>
               </article>
-            ))}
-          </div>
-        </div>
-
-        {/* ── Personal side: lighter layout so it doesn't compete with the professional story ── */}
-        <div>
-          <SubHeading eyebrow="Beyond the Code" title="The Person Behind the Engineer" />
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-7">
-            {personalFacts.map((fact) => (
-              <div key={fact.title} className="flex items-start gap-3">
-                <fact.icon size={18} className="text-sky-500 flex-shrink-0 mt-0.5" />
-                <div>
-                  <h4 className="text-white font-semibold text-sm leading-snug mb-1">{fact.title}</h4>
-                  <p className="text-slate-500 text-xs leading-relaxed">{fact.text}</p>
-                  {fact.link && (
-                    <a
-                      href={fact.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 mt-1.5 text-sky-500 hover:text-sky-400 text-xs font-medium transition-colors"
-                    >
-                      {fact.linkText}
-                      <ExternalLink size={11} />
-                    </a>
-                  )}
-                </div>
-              </div>
             ))}
           </div>
         </div>
